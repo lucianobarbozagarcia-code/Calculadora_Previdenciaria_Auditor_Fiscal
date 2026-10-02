@@ -62,6 +62,7 @@ function rem(d,P){
   const E15=P.inss*P.aliqInss-P.pdInss,E16=(E11-P.inss)*P.aliqPC,E17=E10-E15-E16;
   return{E9,E15,E16,E21:E17-(E17*P.aliqIR-P.pdIR),B8:d.extra*P.aliqIR};
 }
+function needAp(d,P,n,fixed){const f=ap=>avgPay(d.saldo,ap,P.txPriv,n,P.prazoPriv),b0=f(0),b=f(1)-b0;return b>0?Math.max(0,(d.alvo-fixed-b0)/b):null}
 function calc(s,d,P){
   const n=(d.ret-d.idade)*12,R=rem(d,P),out=d.outras+d.conj;
   const j6=avgPay(d.saldo,d.aporte,P.txPriv,n,P.prazoPriv);
@@ -70,10 +71,10 @@ function calc(s,d,P){
     const part=d.pcA!=null?d.pcA:R.E16,pcAp=part*2*(1-P.carreg),pcInit=d.pcS!=null?d.pcS:pcAp;
     const pc=avgPay(pcInit,pcAp,P.txPC,n,P.prazoPC),M11=(P.inss-R.E15)*P.aliqIR-P.pdIR;
     const j4=(P.inss-R.E15-M11)/12*13+pc*(1-P.irPC);
-    return{n,tot:j4+out+j6,linhas:[["INSS + Previdência Complementar",j4],["Outras rendas permanentes",out],["Renda do investimento privado",j6]],atual:R.E21+d.extra-R.B8+d.indeniz+out,part,pcAp,pcInit,E16:R.E16};
+    return{n,aporteNec:needAp(d,P,n,j4+out),tot:j4+out+j6,linhas:[["INSS + Previdência Complementar",j4],["Outras rendas permanentes",out],["Renda do investimento privado",j6]],atual:R.E21+d.extra-R.B8+d.indeniz+out,part,pcAp,pcInit,E16:R.E16};
   }
   const j4=R.E9*13/12*(s==="m"?0.7:1);
-  return{n,tot:j4+out+j6,linhas:[[s==="m"?"Proventos (70%)":"Proventos (integral)",j4],["Outras rendas",out],["Renda do investimento privado",j6]],atual:atualM};
+  return{n,aporteNec:needAp(d,P,n,j4+out),tot:j4+out+j6,linhas:[[s==="m"?"Proventos (70%)":"Proventos (integral)",j4],["Outras rendas",out],["Renda do investimento privado",j6]],atual:atualM};
 }
 /*END*/
 const NM={c:"Complementar",m:"Média",i:"Integralidade"};
@@ -106,6 +107,7 @@ function run(){
   document.getElementById("out").innerHTML=`<div class="card"><h2>${NM[cur]}</h2><div class="big">${brl(r.tot)}</div>
     <div class="bar"><i style="width:${isFinite(pc)?pc:0}%"></i></div>
     <div class="${ok?"ok":"bad"}">${isFinite(pc)?pc.toFixed(0):0}% da renda-alvo de ${brl(d.alvo)} (${ok?"sobra":"falta"} ${brl(Math.abs(r.tot-d.alvo))})</div>
+    ${r.aporteNec===null?"":`<div style="margin-top:10px;padding:10px 12px;border-left:4px solid var(--ac);background:var(--bg);border-radius:6px"><div style="font-size:12px;color:var(--mut)">Aporte mensal necessário no investimento privado para atingir a renda-alvo</div><div style="font-size:20px;font-weight:700">${r.aporteNec>0?brl(r.aporteNec):"Nenhum aporte adicional"}</div><div style="font-size:13px;color:var(--mut)">Aporte atual: ${brl(d.aporte)}${r.aporteNec>d.aporte?` (faltam ${brl(r.aporteNec-d.aporte)} por mês)`:" (suficiente)"}</div></div>`}
     <div style="margin-top:8px">${r.linhas.map(([a,b])=>`<div class="row"><span>${a}</span><b>${brl(b)}</b></div>`).join("")}</div></div>
     <div class="card"><h2>Referências</h2>
     <div class="row"><span>Renda líquida mensal atual</span><b>${brl(r.atual)}</b></div>${cur==="c"?`
