@@ -15,7 +15,7 @@ h1{font-size:22px;margin:0 0 4px}h2{font-size:16px;margin:0 0 10px}h3{font-size:
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 14px}
 .grid[hidden],.grp[hidden]{display:none}
 label{display:block;font-size:12px;color:var(--mut)}
-input{width:100%;box-sizing:border-box;margin-top:3px;padding:8px;border:1px solid var(--ln);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+input,select{width:100%;box-sizing:border-box;margin-top:3px;padding:8px;border:1px solid var(--ln);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
 .res{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
 .big{font-size:26px;font-weight:700}
 .row{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px dashed var(--ln)}
@@ -35,16 +35,31 @@ th:first-child,td:first-child{text-align:left}
 .tabs button.on{background:var(--ac);border-color:var(--ac);color:#fff}
 .hd{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:14px;text-align:center}.hd h1{margin:0}
 .ft{margin-top:24px;padding-top:14px;border-top:1px solid var(--ln);text-align:center;color:var(--mut);font-size:13px}
-</style><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script></head><body><main>
+.msg{margin-top:8px;font-size:13px}
+.kpi{background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:14px}.kpi small{display:block}.big{font-size:24px;font-weight:700}
+.lg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;margin:6px 0}.lg i{display:inline-block;width:12px;height:3px;margin-right:5px;vertical-align:middle}
+.pbtn.sec{background:transparent;color:var(--ac);border:1px solid var(--ac)}
+textarea{width:100%;box-sizing:border-box;margin-top:3px;padding:8px;border:1px solid var(--ln);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+.vrt td input{margin:0;padding:4px 6px;text-align:right;width:110px}
+.scg th,.scg td{padding:3px 4px}.scg td input{width:78px;padding:3px 5px;margin:0;font-size:12px;text-align:right}
+.scg td:first-child{font-weight:600;position:sticky;left:0;background:var(--card)}.scg input:disabled{opacity:.3}
+svg.vrc text{fill:var(--mut);font-size:11px}
+:root{--c1:#8a94a3;--c2:#e08a1e;--c3:#1a7f4b;--c4:#1f5fbf}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--c1:#93a0af;--c2:#f0a94a;--c3:#4cc38a;--c4:#6ea4f0}}
+:root[data-theme="dark"]{--c1:#93a0af;--c2:#f0a94a;--c3:#4cc38a;--c4:#6ea4f0}
+</style><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script></head><body><main>
 <div class="hd"><svg viewBox="0 0 450 330" role="img" aria-label="Ilustração: cifrão, moedas e gráfico de crescimento" style="width:min(300px,80%);height:auto;display:block"><circle cx="40" cy="72" r="15" fill="#f6c431" stroke="#e0a21a" stroke-width="2"/><circle cx="40" cy="72" r="9.0" fill="none" stroke="#fff3b0" stroke-width="1.5"/><circle cx="145" cy="50" r="12" fill="#f6c431" stroke="#e0a21a" stroke-width="2"/><circle cx="145" cy="50" r="7.2" fill="none" stroke="#fff3b0" stroke-width="1.5"/><circle cx="142" cy="153" r="11" fill="#f6c431" stroke="#e0a21a" stroke-width="2"/><circle cx="142" cy="153" r="6.6" fill="none" stroke="#fff3b0" stroke-width="1.5"/><circle cx="375" cy="38" r="15" fill="#f6c431" stroke="#e0a21a" stroke-width="2"/><circle cx="375" cy="38" r="9.0" fill="none" stroke="#fff3b0" stroke-width="1.5"/><circle cx="410" cy="103" r="12" fill="#f6c431" stroke="#e0a21a" stroke-width="2"/><circle cx="410" cy="103" r="7.2" fill="none" stroke="#fff3b0" stroke-width="1.5"/><circle cx="293" cy="122" r="12" fill="#f6c431" stroke="#e0a21a" stroke-width="2"/><circle cx="293" cy="122" r="7.2" fill="none" stroke="#fff3b0" stroke-width="1.5"/><circle cx="352" cy="142" r="9" fill="#f6c431" stroke="#e0a21a" stroke-width="2"/><circle cx="352" cy="142" r="5.4" fill="none" stroke="#fff3b0" stroke-width="1.5"/><text x="228" y="232" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="270" font-weight="700" fill="#46375f">$</text><rect x="94" y="64" width="14" height="46" fill="#f06b9a"/><polygon points="80,108 122,108 101,136" fill="#f06b9a"/><rect x="315" y="38" width="9" height="28" fill="#f5a623"/><polygon points="307,64 332,64 319,84" fill="#f5a623"/><rect x="89" y="289" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="97" y="292" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="89" y="276" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="97" y="279" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="149" y="289" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="157" y="292" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="149" y="276" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="157" y="279" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="149" y="263" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="157" y="266" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="204" y="289" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="212" y="292" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="204" y="276" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="212" y="279" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="204" y="263" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="212" y="266" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="204" y="250" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="212" y="253" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="204" y="237" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="212" y="240" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="259" y="289" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="267" y="292" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="259" y="276" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="267" y="279" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="259" y="263" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="267" y="266" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="259" y="250" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="267" y="253" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="259" y="237" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="267" y="240" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="259" y="224" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="267" y="227" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="259" y="211" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="267" y="214" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="314" y="289" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="322" y="292" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="314" y="276" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="322" y="279" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="314" y="263" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="322" y="266" width="36" height="3" rx="1.5" fill="#fde58a"/><rect x="314" y="250" width="52" height="13" rx="6.5" fill="#f6c431" stroke="#d99a12" stroke-width="1.5"/><rect x="322" y="253" width="36" height="3" rx="1.5" fill="#fde58a"/><polyline points="92,270 160,206 198,214 240,176 340,112" fill="none" stroke="#e8446a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><polygon points="361,96 330,100 346,124" fill="#e8446a"/><text x="345" y="226" text-anchor="middle" font-family="Arial,sans-serif" font-size="78" font-weight="700" fill="#46375f">%</text><circle cx="50" cy="172" r="11" fill="#f1c9a5"/><path d="M39 170q11-14 22 0z" fill="#2a2440"/><rect x="30" y="186" width="32" height="58" rx="9" fill="#2b2d5b"/><rect x="33" y="243" width="11" height="48" rx="3" fill="#3e7be0"/><rect x="48" y="243" width="11" height="48" rx="3" fill="#3e7be0"/><rect x="30" y="289" width="16" height="6" rx="3" fill="#1d1d2f"/><rect x="47" y="289" width="16" height="6" rx="3" fill="#1d1d2f"/><path d="M34 196l-8-24 14-6M60 196l6-22-14-8" stroke="#2b2d5b" stroke-width="8" fill="none" stroke-linecap="round"/><circle cx="112" cy="150" r="11" fill="#f1c9a5"/><path d="M101 148q11-15 22 0z" fill="#2a2440"/><rect x="96" y="163" width="30" height="56" rx="9" fill="#7fb2ee"/><rect x="99" y="217" width="11" height="74" rx="3" fill="#2c2f4d"/><rect x="113" y="217" width="11" height="74" rx="3" fill="#2c2f4d"/><rect x="97" y="288" width="15" height="6" rx="3" fill="#1d1d2f"/><rect x="112" y="288" width="15" height="6" rx="3" fill="#1d1d2f"/><rect x="124" y="184" width="24" height="17" rx="2" fill="#8d63c9"/><path d="M104 178l22 12" stroke="#7fb2ee" stroke-width="8" stroke-linecap="round"/><circle cx="408" cy="168" r="11" fill="#f1c9a5"/><path d="M394 166q2-18 20-14 12 4 8 28-6-16-28-14z" fill="#8a4b2d"/><rect x="394" y="180" width="28" height="48" rx="9" fill="#b57cc8"/><rect x="395" y="226" width="11" height="66" rx="3" fill="#f06b9a"/><rect x="409" y="226" width="11" height="66" rx="3" fill="#f06b9a"/><rect x="394" y="289" width="15" height="6" rx="3" fill="#1d1d2f"/><rect x="409" y="289" width="15" height="6" rx="3" fill="#1d1d2f"/><path d="M396 196l-30 6" stroke="#b57cc8" stroke-width="8" stroke-linecap="round"/></svg><h1>Calculadora Previdenciária do Auditor Fiscal</h1></div>
 <p class="sub">Projeta a renda na aposentadoria em três regimes. Escolha o regime e preencha os dados dele. Valores em R$ mensais.</p>
-<div class="tabs" id="tabs"><button data-s="c" class="on">Complementar</button><button data-s="m">Média</button><button data-s="i">Integralidade</button></div>
+<div class="tabs" id="tabs"><button data-s="c" class="on">Complementar</button><button data-s="m">Média</button><button data-s="i">Integralidade</button><button data-s="a">Aposentado</button></div>
 <div class="card"><h2 id="ptitle">Dados do regime Complementar</h2><div id="forms"></div></div>
-<div class="card"><details><summary>Premissas (alíquotas, tetos e rentabilidade)</summary><div class="grid" id="gp" style="margin-top:12px"></div></details></div>
+<div class="card"><details><summary>Premissas (alíquotas, tetos e rentabilidade)</summary><div id="gp" style="margin-top:12px"></div></details></div>
 <div class="res" id="out"></div>
+<div id="vr"></div>
 <div style="margin:0 0 16px"><button id="repBtn" class="pbtn">Gerar relatório mensal</button></div>
 <div id="rep"></div>
-<p><small>Simulação educacional baseada na planilha original; não substitui orientação de um profissional. As tabelas de IR e contribuições seguem os valores da planilha e podem estar desatualizadas: ajuste em "Premissas".</small></p>
+<div style="margin:0 0 16px"><button id="rkBtn" class="pbtn">Ranking das Remunerações do Fisco</button></div>
+<div id="rk"></div>
+<p><small>Simulação educacional baseada na planilha original; não substitui orientação de um profissional. As tabelas de contribuição e de IR seguem os valores da planilha, vigência 2026; ajuste em "Premissas" se mudarem.</small></p>
 <script>
 /*ENGINE*/
 function avgPay(init,ap,ann,n,P){
@@ -56,64 +71,233 @@ function avgPay(init,ap,ann,n,P){
   for(let j=0;j<P;j++){const L=K/(P-j);s+=L;K=(K-L)*r;}
   return s/P;
 }
-function rem(d,P){
-  const E4=d.teto*P.aliqInt-P.pdInt,E5=d.teto-E4,E9=E5-(E5*P.aliqIR-P.pdIR);
-  const soma=d.sb+d.rc,E10=Math.min(soma+d.sp,d.teto),E11=soma<d.teto?soma:d.teto;
-  const E15=P.inss*P.aliqInss-P.pdInss,E16=(E11-P.inss)*P.aliqPC,E17=E10-E15-E16;
-  return{E9,E15,E16,E21:E17-(E17*P.aliqIR-P.pdIR),B8:d.extra*P.aliqIR};
+function saldoFim(init,ap,ann,n){
+  const r=Math.round(Math.pow(1+ann,1/12)*1e6)/1e6;
+  let B=init;for(let i=0;i<n;i++)B=B*r+ap;
+  const y=Math.floor(n/12)+1;let F=ap;
+  for(let k=1;k<y;k++)F=F*(1+ann)+ap;
+  return B+F;
+}
+function rendaPerp(saldo,tx){return saldo*(Math.round(Math.pow(1+tx,1/12)*1e6)/1e6-1)}
+const rd2=x=>Math.round(x*100)/100;
+function pick(t,b){let i=0;for(const r of t)if(r.ate<b)i++;return t[Math.min(i,t.length-1)]}
+function cpss(P,b){if(b<=0)return 0;const r=pick(P.cp,b);return Math.max(0,rd2(b*r.al-r.pd))}
+function irDev(P,rend){
+  const p=P.irp,b=Math.max(0,rend-(p.usa?p.simp:0));if(b<=0)return 0;
+  const r=pick(P.ir,b),imp=Math.max(0,rd2(b*r.al-r.pd));let red=0;
+  if(rend<=p.l1)red=Math.min(imp,p.red1);else if(rend<=p.l2)red=Math.min(imp,Math.max(0,rd2(p.k-p.c*rend)));
+  return imp-red;
+}
+function capTeto(d){
+  let sb=d.sb,rc=d.rc,sp=d.sp,ex=sb+rc+sp-d.teto;
+  if(ex>0){const a=Math.min(sp,ex);sp-=a;ex-=a;
+    if(ex>0){const b=Math.min(rc,ex);rc-=b;ex-=b}
+    if(ex>0)sb=Math.max(0,sb-ex)}
+  return{sb,rc,sp,aj:sb!==d.sb||rc!==d.rc||sp!==d.sp};
+}
+function rem(d0,P){
+  const cap=capTeto(d0),d={...d0,sb:cap.sb,rc:cap.rc,sp:cap.sp};
+  const E1=d.sb+d.rc,E4=cpss(P,E1),E5=E1-E4,E9=E5-irDev(P,E5);
+  const soma=d.sb+d.rc,E10=Math.min(soma+d.sp,d.teto),E11=soma<d.teto?soma:d.teto,E12=Math.min(soma,P.inss);
+  const E15=cpss(P,E12),E16=(E11-E12)*P.aliqPC,E17=E10-E15-E16;
+  return{cap,E4,E5,E9,E12,E15,E16,E17,E21:E17-irDev(P,E17),B8:d.extra*P.aliqExtra,M11:irDev(P,E12-E15)};
 }
 function needAp(d,P,n,fixed){const f=ap=>avgPay(d.saldo,ap,P.txPriv,n,P.prazoPriv),b0=f(0),b=f(1)-b0;return b>0?Math.max(0,(d.alvo-fixed-b0)/b):null}
+function needApPerp(d,P,n,fixed){const f=ap=>rendaPerp(saldoFim(d.saldo,ap,P.txPriv,n),P.rpTx),b0=f(0),b=f(1)-b0;return b>0?Math.max(0,(d.alvo-fixed-b0)/b):null}
+function liqAp(P,bruto,idade){
+  const cp=Math.max(0,cpss(P,bruto)-P.cpssIn),rend=Math.max(0,bruto-cp-(idade>=65?P.ir65:0)),ir=irDev(P,rend);
+  return{cp,ir,liq:bruto-cp-ir};
+}
+function calcA(d,P){
+  const ret=d.ret>0?d.ret:100,n=Math.max(0,Math.round((ret-d.idade)*12)),cap=capTeto(d),E1=cap.sb+cap.rc,out=d.outras+d.conj;
+  const A=liqAp(P,E1,d.idade),B8=d.extra*P.aliqExtra;
+  const cota=Math.min(1,0.6+0.1*Math.floor(d.filhos)),pb=cota*E1,idPens=d.idadeC+Math.max(0,ret-d.idade),Pn=liqAp(P,pb,idPens);
+  const S=saldoFim(d.saldo,d.aporte,P.txPriv,n),rpFut=rendaPerp(S,P.rpTx),rpHoje=rendaPerp(d.saldo,P.rpTx);
+  const aposLiq13=A.liq*13/12,pensLiq13=Pn.liq*13/12,totHoje=aposLiq13+out+rpHoje,tot=pensLiq13+out+rpFut,sal=A.liq+d.extra-B8;
+  return{n,cap,aporteNec:needApPerp(d,P,n,pensLiq13+out),tot,
+    linhas:[["Pensão líquida (60% + 10% por filho menor), com 13º",pensLiq13],["Outras rendas permanentes",out],["Renda vitalícia sobre o saldo acumulado",rpFut]],
+    atual:sal+d.indeniz+out+A.liq/12,sal,sal13:sal+A.liq/12,cont:A.cp,irm:A.ir+B8,
+    perp:{saldo:S,renda:rpFut,total:tot,tx:P.rpTx},
+    apo:{ret,cota,pb,idPens,pensCp:Pn.cp,pensIr:Pn.ir,aposLiq13,rpHoje,totHoje,saldoHoje:d.saldo}};
+}
 function calc(s,d,P){
+  if(s==="a")return calcA(d,P);
   const n=(d.ret-d.idade)*12,R=rem(d,P),out=d.outras+d.conj;
   const j6=avgPay(d.saldo,d.aporte,P.txPriv,n,P.prazoPriv);
-  const atualM=R.E9+d.extra-R.B8+d.indeniz+out+R.E21/12;
+  const atualM=R.E9+d.extra-R.B8+d.indeniz+out+R.E9/36+R.E21/12;
   if(s==="c"){
     const part=d.pcA!=null?d.pcA:R.E16,pcAp=part*2*(1-P.carreg),pcInit=d.pcS!=null?d.pcS:pcAp;
-    const pc=avgPay(pcInit,pcAp,P.txPC,n,P.prazoPC),M11=(P.inss-R.E15)*P.aliqIR-P.pdIR;
-    const j4=(P.inss-R.E15-M11)/12*13+pc*(1-P.irPC);
-    return{n,aporteNec:needAp(d,P,n,j4+out),tot:j4+out+j6,linhas:[["INSS + Previdência Complementar",j4],["Outras rendas permanentes",out],["Renda do investimento privado",j6]],atual:R.E21+d.extra-R.B8+d.indeniz+out,part,pcAp,pcInit,E16:R.E16};
+    const pc=avgPay(pcInit,pcAp,P.txPC,n,P.prazoPC);
+    const inss=(R.E12-R.E15-R.M11)/12*13,j4=inss+pc*(1-P.irPC);
+    const sPC=saldoFim(pcInit,pcAp,P.txPC,n),sPr=saldoFim(d.saldo,d.aporte,P.txPriv,n),rp=rendaPerp(sPC+sPr,P.rpTx);
+    const perp={saldo:sPC+sPr,renda:rp,total:inss+out+rp,tx:P.rpTx};
+    return{n,perp,aporteNec:needAp(d,P,n,j4+out),tot:j4+out+j6,linhas:[["INSS + Previdência Complementar",j4],["Outras rendas permanentes",out],["Renda do investimento privado",j6]],atual:R.E21+d.extra-R.B8+d.indeniz+out+R.E21/36+R.E21/12,part,pcAp,pcInit,E16:R.E16,sal:R.E21+d.extra-R.B8,sal13:R.E21+d.extra-R.B8+R.E21/12+R.E21/36,cont:R.E15,irm:R.E17-R.E21+R.B8,cap:R.cap};
   }
-  const j4=R.E9*13/12*(s==="m"?0.7:1);
-  return{n,aporteNec:needAp(d,P,n,j4+out),tot:j4+out+j6,linhas:[[s==="m"?"Proventos (70%)":"Proventos (integral)",j4],["Outras rendas",out],["Renda do investimento privado",j6]],atual:atualM};
+  let baseM=R.E9,usouScm=false,bruto=null;
+  if(s==="m"&&d.scm!=null){const b5=d.scm-cpss(P,d.scm);baseM=b5-irDev(P,b5);usouScm=true;bruto=d.scm}
+  const coef=(s==="m"&&!usouScm)?0.7:1;
+  const j4=baseM*13/12*coef;
+  const sPr=saldoFim(d.saldo,d.aporte,P.txPriv,n),rp=rendaPerp(sPr,P.rpTx),perp={saldo:sPr,renda:rp,total:j4+out+rp,tx:P.rpTx};
+  return{n,perp,aporteNec:needAp(d,P,n,j4+out),tot:j4+out+j6,linhas:[[s==="m"?"Proventos (70%)":"Proventos (integral)",j4],["Outras rendas",out],["Renda do investimento privado",j6]],atual:atualM,sal:R.E9+d.extra-R.B8,sal13:R.E9+d.extra-R.B8+R.E21/12+R.E9/36,cont:R.E4,irm:R.E5-R.E9+R.B8,baseM,usouScm,bruto,coef,cap:R.cap};
 }
 /*END*/
-const NM={c:"Complementar",m:"Média",i:"Integralidade"};
+const NM={c:"Complementar",m:"Média",i:"Integralidade",a:"Aposentado"};
 const COM=[["idade","Idade atual"],["ret","Idade de aposentadoria"],["saldo","Saldo atual InvestPriv"],["aporte","Aporte mensal InvestPriv"],["alvo","Renda-alvo"],["outras","Outras rendas"],["conj","Renda do cônjuge"]];
 const REM=[["teto","Teto remuneratório"],["sb","Salário base"],["rc","Rem. adicional com contrib. previd."],["sp","Rem. adicional sem contrib. previd."],["extra","Extra-teto com IR"],["indeniz","Indenizações"]];
+const SCMF=[["scm","Aposentadoria bruta apurada pela média (opcional)"]];
 const PCF=[["pcS","Saldo atual da PrevComple (opcional)"],["pcA","Aporte mensal do participante na PrevComple (em branco = valor apurado)"]];
-const DD={c:{idade:35,ret:70,saldo:1000,aporte:2341.75,alvo:50000},m:{idade:45,ret:68,saldo:300000,aporte:3500,alvo:45000},i:{idade:50,ret:65,saldo:500000,aporte:2000,alvo:45000}};
-const RD={outras:1000,conj:5000,teto:41845.48,sb:11596,rc:30119,sp:6000,extra:2324,indeniz:3450,pcS:"",pcA:""};
-const PD={inss:8475.55,aliqInt:.19,pdInt:1256.86,aliqInss:.14,pdInss:215.75,aliqPC:.075,carreg:.065,aliqIR:.275,pdIR:908.73,irPC:.1,txPC:.03,txPriv:.05,prazoPC:240,prazoPriv:300};
-const PL={inss:"Teto INSS",aliqInt:"Alíq. previd. (integral)",pdInt:"Parcela dedutível (integral)",aliqInss:"Alíq. INSS",pdInss:"Parcela dedutível INSS",aliqPC:"Alíq. prev. complementar",carreg:"Taxa de carregamento",aliqIR:"Alíq. IR",pdIR:"Parcela dedutível IR",irPC:"IR sobre prev. compl.",txPC:"Rentab. real a.a. prev. compl.",txPriv:"Rentab. real a.a. invest. privado",prazoPC:"Meses de recebimento (prev. compl.)",prazoPriv:"Meses de recebimento (privado)"};
-const pct=new Set(["aliqInt","aliqInss","aliqPC","carreg","aliqIR","irPC","txPC","txPriv"]);
+const DD={c:{idade:35,ret:70,saldo:1000,aporte:2341.75,alvo:50000},m:{idade:45,ret:68,saldo:300000,aporte:3500,alvo:45000},i:{idade:50,ret:65,saldo:500000,aporte:2000,alvo:45000},a:{idade:70,ret:"",saldo:500,aporte:500,alvo:10000}};
+const LBL={a:{ret:"Expectativa de vida (anos; em branco: 100)",alvo:"Pensão alvo"}};
+const APF=[["idadeC","Idade do cônjuge"],["filhos","Quantidade de filhos menores"]];
+const RD={outras:"",conj:"",teto:41845.48,sb:11596,rc:30119,sp:6000,extra:2324,indeniz:3450,pcS:"",pcA:"",scm:"",idadeC:65,filhos:0};
+const PD={inss:8475.55,aliqPC:.075,carreg:.065,irPC:.1,aliqExtra:.275,txPC:.03,txPriv:.05,rpTx:.05,cpssIn:988.07,ir65:1903.98,prazoPC:240,prazoPriv:300};
+const PL={inss:"Teto INSS",aliqPC:"Alíq. prev. complementar",carreg:"Taxa de carregamento",irPC:"IR sobre prev. compl.",aliqExtra:"Alíq. IR sobre extra-teto",txPC:"Rentab. real a.a. prev. compl.",txPriv:"Rentab. real a.a. invest. privado",rpTx:"Taxa da renda vitalícia (% a.a.)",cpssIn:"Aposentado: parcela fixa a deduzir da CPSS de inativo (R$)",ir65:"Aposentado: parcela isenta de IR a partir de 65 anos (R$ ao mês)",prazoPC:"Meses de recebimento (prev. compl.)",prazoPriv:"Meses de recebimento (privado)"};
+const CPD_FED=[[1621,.075,0],[2902.84,.09,24.33],[4354.27,.12,111.42],[8475.55,.14,198.51],[14514.30,.145,240.89],[29028.57,.165,531.18],[56605.73,.19,1256.89],[99999999,.22,2955.06]];
+let CPD=CPD_FED.map(r=>r.slice());
+const IRD=[[2428.80,0,0],[2826.65,.075,182.16],[3751.05,.15,394.16],[4664.68,.225,675.49],[99999999,.275,908.73]];
+const IRPD={l1:5000,red1:312.89,l2:7350,k:978.62,c:.133145,simp:607.20};
+const IRPL={l1:"Limite com redução que zera o imposto (R$)",red1:"Redução máxima até esse limite (R$)",l2:"Limite superior da redução decrescente (R$)",k:"Constante da fórmula da redução (R$)",c:"Coeficiente da fórmula da redução",simp:"Valor do desconto simplificado mensal (R$), usado só se aplicado"};
+const pct=new Set(["aliqPC","carreg","irPC","aliqExtra","txPC","txPriv","rpTx"]);
+const VRHTML=`<h3>Extrato do RS-PREV</h3><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><button type="button" class="pbtn" id="vr_btn">Carregar RSprev</button><input type="file" id="vr_pdf" accept="application/pdf,.pdf" style="display:none"><span class="msg" id="vr_st" style="margin:0"><small>Envie o PDF do extrato de contribuições. Ele é lido no seu navegador e não é enviado a nenhum servidor. O saldo total do extrato vai para "Saldo atual da PrevComple".</small></span></div>
+<details style="margin-top:8px"><summary>Colar o texto do extrato (se a leitura do PDF falhar)</summary><p><small>Abra o PDF, selecione tudo (Ctrl+A), copie e cole abaixo.</small></p><textarea id="vr_txt" rows="4" placeholder="Cole aqui o texto do extrato"></textarea><p><button type="button" class="pbtn sec" id="vr_bt">Ler texto colado</button></p></details>
+<details style="margin-top:8px"><summary>Ajustes do verificador</summary><div class="grid" style="margin-top:8px"><label>Meta de rentabilidade real (% a.a., acima do IPCA)<input id="vr_meta" type="number" step="any" value="3"></label><label>Mês de referência do saldo<input id="vr_ref" type="month"></label><label>Multiplicador da contrapartida do patrocinador<input id="vr_mult" type="number" step="any" value="2"></label><label>IPCA estimado para meses sem dado (% ao mês)<input id="vr_est" type="number" step="any" value="0.4"></label></div>
+<h3>Aportes mensais lidos do extrato (editável)</h3><div class="tw vrt" id="vr_tap"></div><h3>IPCA mensal (%) usado no cálculo (editável)</h3><div class="tw vrt" id="vr_tip"></div><p class="msg" id="vr_warn"></p></details>`;
+const SCHTML=`<div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center"><button type="button" class="pbtn" id="sc_btn">Carregar Excel de salários de contribuição</button><button type="button" class="pbtn sec" id="sc_model">Baixar modelo de Excel</button><input type="file" id="sc_file" accept=".xlsx,.xls" style="display:none"><span class="msg" id="sc_st" style="margin:0"><small>Opcional. O Excel é lido no seu navegador e não é enviado a nenhum servidor.</small></span></div>
+<div id="sc_box" hidden style="margin-top:12px"><p class="sub" style="margin-bottom:8px">Os salários do Excel são atualizados pelo INPC até o mês anterior à consulta. Para os meses que faltam até aposentar, o app usa o salário de contribuição da ativa (salário base + adicional com contribuição previdenciária, limitado ao teto), sem atualização. Com a média simples, aplica 60% mais 2% por ano completo que exceder 20 anos (homens) ou 15 anos (mulheres), e o resultado bruto vai para o campo "Aposentadoria bruta apurada pela média"; previdência e IR são descontados em seguida.</p>
+<div class="grid" style="margin-bottom:8px"><label>Sexo (define o tempo mínimo para o acréscimo de 2% ao ano)<select id="sc_sexo"><option>Masculino</option><option>Feminino</option></select></label><label>INPC estimado para meses sem dado (% ao mês)<input id="sc_est" type="number" step="any" value="0.4"></label></div>
+<p class="msg" id="sc_sum"></p>
+<details style="margin-top:8px"><summary>Ver salários carregados e atualizados</summary><div class="tw" id="sc_tab"></div></details>
+<p><button type="button" class="pbtn sec" id="sc_clear">Remover salários carregados</button></p></div>`;
 const inp=(id,t,v)=>`<label>${t}<input id="${id}" type="number" step="any" value="${v}"></label>`;
-document.getElementById("forms").innerHTML=["c","m","i"].map(s=>{
+document.getElementById("forms").innerHTML=["c","m","i","a"].map(s=>{
   const dv=k=>(DD[s][k]!==undefined?DD[s][k]:RD[k]);
-  const g=(l)=>l.map(([k,t])=>inp(s+"_"+k,t,dv(k))).join("");
-  return `<div class="grp" id="grp_${s}"${s!=="c"?" hidden":""}><h3>Dados do regime</h3><div class="grid">${g(COM)}</div><h3>Remuneração atual</h3><div class="grid">${g(REM)}</div>${s==="c"?`<h3>Previdência complementar</h3><div class="grid">${g(PCF)}</div>`:""}</div>`}).join("");
-document.getElementById("gp").innerHTML=Object.keys(PD).map(k=>inp(k,PL[k],pct.has(k)?+(PD[k]*100).toFixed(6):PD[k])).join("");
+  const g=(l)=>l.map(([k,t])=>inp(s+"_"+k,(LBL[s]&&LBL[s][k])||t,dv(k))).join("");
+  return `<div class="grp" id="grp_${s}"${s!=="c"?" hidden":""}><h3>Dados do regime</h3><div class="grid">${g(COM)}</div><h3>Remuneração atual</h3><div class="grid">${g(REM)}</div>${s==="a"?`<h3>Cônjuge e dependentes (pensão)</h3><div class="grid">${g(APF)}</div>`:""}${s==="c"?`<h3>Previdência complementar</h3><div class="grid">${g(PCF)}</div>`+VRHTML:""}${s==="m"?`<h3>Proventos</h3><div class="grid">${g(SCMF)}</div><p style="margin:8px 0 0"><small>Em branco, os proventos são 70% da remuneração líquida atual. Preenchido (à mão ou pela grade abaixo), o valor é a aposentadoria bruta pela média: o app desconta previdência e IR e não aplica os 70%.</small></p>`+SCHTML:""}</div>`}).join("");
+const tab=(p,rows,t)=>`<h3>${t}</h3><div class="tw" style="max-height:none"><table><thead><tr><th>Faixa</th><th>Até (R$)</th><th>Alíquota (%)</th><th>Parcela a deduzir (R$)</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${i+1}</td><td><input id="${p}${i}_ate" type="number" step="any" value="${r[0]}" style="margin:0"></td><td><input id="${p}${i}_al" type="number" step="any" value="${+(r[1]*100).toFixed(4)}" style="margin:0"></td><td><input id="${p}${i}_pd" type="number" step="any" value="${r[2]}" style="margin:0"></td></tr>`).join("")}</tbody></table></div>`;
+const SM=1621;
+const T14="Alíquota única de 14% sobre toda a base de contribuição (levantamento do Dieese, 2026).";
+const UFD={
+FED:{n:"Federal (União)",tp:"fed",st:"ok",lim:"teto",obs:"Tabela da União, Portaria Interministerial MPS/MF nº 13/2026 (7,5% a 22%)."},
+RS:{n:"Rio Grande do Sul",tp:"fed",st:"ok",lim:{sm:1},obs:"Mesma tabela da União (7,5% a 22%), conforme informado; a IN IPE Prev 02/2026 tem parcelas com diferença de centavos."},
+SP:{n:"São Paulo",tp:"band",st:"ok",lim:"teto",b:[[1621,.11],[4174.58,.12],[8475.55,.14],[99999999,.16]],obs:"Sefaz-SP, LC 1.012/2007 (LC 1.354/2020), vigência 01/2026: 11% até R$ 1.621,00; 12% até R$ 4.174,58; 14% até R$ 8.475,55; 16% acima."},
+AC:{n:"Acre",tp:"flat",a:.14,st:"ok",lim:"teto",obs:T14},
+AL:{n:"Alagoas",tp:"flat",a:.14,st:"ok",lim:"teto",obs:T14},
+AP:{n:"Amapá",tp:"flat",a:.14,st:"ok",lim:"teto",obs:T14},
+AM:{n:"Amazonas",tp:"flat",a:.14,st:"ok",lim:"teto",obs:T14},
+BA:{n:"Bahia",tp:"band",st:"aprox",lim:{sm:3},b:[[15000,.14],[99999999,.15]],obs:"14%; o levantamento do Dieese cita 15% acima de R$ 15 mil. Tratei como alíquota marginal (14% até R$ 15.000 e 15% sobre o excedente). Confirme na lei estadual (Lei 14.250/2020)."},
+CE:{n:"Ceará",tp:"flat",a:.14,st:"ok",lim:{sm:2},obs:T14},
+DF:{n:"Distrito Federal",tp:"flat",a:.14,st:"ok",lim:{sm:1},obs:T14+" Para inativos, o DF cobra 11% até o teto do RGPS e 14% sobre o excedente; essa regra não está modelada."},
+ES:{n:"Espírito Santo",tp:"flat",a:.14,st:"ok",lim:"teto",obs:T14},
+GO:{n:"Goiás",tp:"flat",a:.1425,st:"ok",lim:{v:3000},obs:"Alíquota única de 14,25% sobre toda a base (levantamento do Dieese, 2026)."},
+MA:{n:"Maranhão",tp:"fed",st:"aprox",lim:"teto",obs:"Escala progressiva de 7,5% a 22%, como a da União. Assumi as faixas iguais às da União; confirme na norma estadual (LC 219/2019)."},
+MT:{n:"Mato Grosso",tp:"flat",a:.14,st:"ok",lim:{v:3000},obs:T14},
+MS:{n:"Mato Grosso do Sul",tp:"flat",a:.14,st:"ok",lim:{sm:1},obs:T14},
+MG:{n:"Minas Gerais",tp:"fed",st:"pend",lim:{sm:3},obs:"Minas tem tabela progressiva própria (11% a 16%), mas não consegui confirmar as faixas de 2026. Estou usando a tabela da União. Edite as faixas na tabela abaixo (LC 156/2020 e atualizações)."},
+PA:{n:"Pará",tp:"flat",a:.14,st:"ok",lim:"teto",obs:T14},
+PB:{n:"Paraíba",tp:"flat",a:.14,st:"ok",lim:"teto",obs:T14},
+PR:{n:"Paraná",tp:"flat",a:.14,st:"ok",lim:{sm:3},obs:T14},
+PE:{n:"Pernambuco",tp:"flat",a:.14,st:"ok",lim:"teto",obs:T14},
+PI:{n:"Piauí",tp:"flat",a:.14,st:"ok",lim:{sm:1},obs:T14},
+RJ:{n:"Rio de Janeiro",tp:"flat",a:.14,st:"ok",lim:"teto",obs:T14},
+RN:{n:"Rio Grande do Norte",tp:"band",st:"aprox",lim:{v:4862.18},b:[[4862.18,.11],[8475.55,.14],[20837.9,.15],[41675.8,.16],[99999999,.18]],obs:"Lei 11.109/2022 (11% a 18%). As faixas de 2026 foram calculadas aplicando os reajustes de 2025 (4,77%) e 2026 (3,90%) à tabela do IPERN; o método reproduz R$ 4.862,18 e R$ 8.475,55. Confirme na Portaria 001/2026 do IPERN."},
+RO:{n:"Rondônia",tp:"flat",a:.14,st:"ok",lim:{sm:3},obs:T14},
+RR:{n:"Roraima",tp:"band",st:"aprox",lim:"teto",b:[[5000,.11],[7500,.115],[12000,.12],[16000,.125],[19000,.13],[35000,.135],[99999999,.14]],obs:"LC 301/2021 (11% a 14%): 11% até R$ 5.000; 11,5% até R$ 7.500; 12% até R$ 12.000; 13% de R$ 16.000,01 a R$ 19.000; 13,5% até R$ 35.000; 14% acima. A faixa de R$ 12.000,01 a R$ 16.000 (12,5%) foi inferida e os valores são nominais, sem atualização."},
+SC:{n:"Santa Catarina",tp:"flat",a:.14,st:"ok",lim:{sm:3},obs:T14},
+SE:{n:"Sergipe",tp:"flat",a:.14,st:"ok",lim:"teto",obs:T14},
+TO:{n:"Tocantins",tp:"flat",a:.14,st:"ok",lim:"teto",obs:T14}
+};
+const UF_ORD=["FED"].concat(Object.keys(UFD).filter(k=>k!=="FED").sort((a,b)=>UFD[a].n.localeCompare(UFD[b].n,"pt-BR")));
+function ufRows(c){
+  const u=UFD[c];
+  if(u.tp==="fed")return CPD_FED.map(r=>r.slice());
+  if(u.tp==="flat")return[[99999999,u.a,0]];
+  return u.b.map((x,k)=>{let pd=0;for(let j=0;j<k;j++)pd+=(x[1]-u.b[j][1])*(u.b[j][0]-(j?u.b[j-1][0]:0));return[x[0],x[1],Math.round(pd*100)/100]});
+}
+function ufLim(c){const l=UFD[c].lim;return l==="teto"?get("inss"):(l.sm?l.sm*SM:l.v)}
+function ufMsg(c){
+  const u=UFD[c],e=document.getElementById("uf_msg");
+  e.className="msg "+(u.st==="ok"?"ok":(u.st==="pend"?"bad":""));
+  e.innerHTML=(u.st==="ok"?"":(u.st==="pend"?"<b>Atenção:</b> tabela não confirmada. ":"<b>Atenção:</b> dado parcialmente confirmado. "))+u.obs;
+}
+const REMK=["teto","sb","rc","sp","extra","indeniz"];
+const REMD={teto:41845.48,sb:11596,rc:30119,sp:6000,extra:2324,indeniz:3450};
+const UFREM={};
+Object.keys(UFD).forEach(c=>{UFREM[c]={teto:"",sb:"",rc:"",sp:"",extra:"",indeniz:""}});
+UFREM.RS=Object.assign({},REMD);
+/* Demais entes: só teto, remuneração básica e indenizações (sigla, rem. básica, indenizações, teto) */
+[["SC",28300,16400,41845],["MS",41845,11500,41845],["RO",31425,14400,41845],["PA",46366,5900,46366],["AC",31512,11000,41845],["MT",32971.87,12000,41845],["PE",31600,5700,46366],["RR",46366,0,46366],["PR",25923,10015,41845],["AL",24800,9000,41845],["SP",28669,10278,36301],["AM",41845,500,41845],["PI",37139,2000,41845],["FED",27287,1000,46366],["GO",28563,3600,41845],["DF",29855,2940,41845],["TO",23874,9228,41845],["MA",36068,400,41845],["RN",36792.84,0,41845],["RJ",27430,2882,41845],["CE",28800,2000,41845],["AP",30380,1102,41845],["MG",27000,3591,41845],["BA",19534,4900,41845],["ES",22853,5900,33006],["SE",22541,0,41845],["PB",18388.43,2500,32350]].forEach(([c,sb,ind,t])=>{UFREM[c]={teto:t,sb:sb,rc:"",sp:"",extra:"",indeniz:ind||""}});
+function aplicaRem(c){const v=UFREM[c];["c","m","i","a"].forEach(s=>REMK.forEach(k=>{document.getElementById(s+"_"+k).value=v[k]}))}
+function setUF(c){
+  CPD=ufRows(c);renderCp();
+  const L=ufLim(c);let i=0;CPD.forEach(r=>{if(r[0]<L)i++});const r=CPD[Math.min(i,CPD.length-1)];
+  document.getElementById("cpssIn").value=Math.max(0,Math.round((L*r[1]-r[2])*100)/100);
+  ufMsg(c);aplicaRem(c);
+  document.getElementById("uf_msg").innerHTML+="<br><small>Teto e remuneração preenchidos com os valores padrão do ente (editáveis).</small>";
+}
+function renderCp(){
+  const b=document.getElementById("cp_box");
+  b.innerHTML=tab("cp",CPD,"Tabela da contribuição previdenciária (CPSS)");
+  b.querySelectorAll("input").forEach(i=>i.addEventListener("input",run));
+}
+document.getElementById("gp").innerHTML=`<h3>Ente do servidor</h3><div class="grid"><label>Estado do servidor ou Federal (define a tabela de contribuição previdenciária)<select id="uf">${UF_ORD.map(c=>`<option value="${c}">${UFD[c].n}</option>`).join("")}</select></label></div><p class="msg" id="uf_msg"></p><h3>Gerais</h3><div class="grid">${Object.keys(PD).map(k=>inp(k,PL[k],pct.has(k)?+(PD[k]*100).toFixed(6):PD[k])).join("")}</div>`+`<div id="cp_box"></div>`+tab("ir",IRD,"Tabela do Imposto de Renda")+`<h3>Redução do IR e desconto simplificado</h3><div class="grid"><label>Aplicar o desconto simplificado mensal do IR? (padrão: Não)<select id="irp_usa"><option>Não</option><option>Sim</option></select></label>${Object.keys(IRPD).map(k=>inp("irp_"+k,IRPL[k],IRPD[k])).join("")}</div>`;
+document.getElementById("uf").value="RS";setUF("RS");
 const brl=v=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
-function get(k){const v=parseFloat(document.getElementById(k).value);const x=isNaN(v)?0:v;return pct.has(k)?x/100:x}
+function get(k){const v=parseFloat(document.getElementById(k).value);const x=isNaN(v)?0:v;return (pct.has(k)||k.endsWith("_al"))?x/100:x}
 const opt=k=>document.getElementById(k).value.trim()===""?null:get(k);
 let cur="c",showRep=false,RP=null;
 function series(init,ap,ann,n){const r=Math.round(Math.pow(1+ann,1/12)*1e6)/1e6,a=[init];let B=init;for(let i=0;i<n;i++){B=B*r+ap;a.push(B)}return a}
-function run(){
+function lerP(){
   const P={};Object.keys(PD).forEach(k=>P[k]=get(k));
+  P.cp=CPD.map((_,i)=>({ate:get("cp"+i+"_ate"),al:get("cp"+i+"_al"),pd:get("cp"+i+"_pd")}));
+  P.ir=IRD.map((_,i)=>({ate:get("ir"+i+"_ate"),al:get("ir"+i+"_al"),pd:get("ir"+i+"_pd")}));
+  P.irp={};Object.keys(IRPD).forEach(k=>P.irp[k]=get("irp_"+k));P.irp.usa=document.getElementById("irp_usa").value==="Sim";
+  return P;
+}
+function lerD(){
   const d={};[...COM,...REM].forEach(([k])=>d[k]=get(cur+"_"+k));
+  if(cur==="a")APF.forEach(([k])=>d[k]=get("a_"+k));
   if(cur==="c"){d.pcS=opt("c_pcS");d.pcA=opt("c_pcA")}
+  if(cur==="m")d.scm=opt("m_scm");
+  return d;
+}
+function run(){
+  const P=lerP(),d=lerD();
   const r=calc(cur,d,P);
+  if(cur==="a")document.getElementById("a_ret").placeholder="100 (padrão)";
+  if(cur==="m")document.getElementById("m_scm").placeholder="Opcional (em branco: 70% da remuneração atual)";
   if(cur==="c"){document.getElementById("c_pcA").placeholder=brl(r.E16)+" (apurado)";document.getElementById("c_pcS").placeholder="Opcional"}
   const pc=Math.min(100,r.tot/d.alvo*100),ok=r.tot>=d.alvo;
-  document.getElementById("out").innerHTML=`<div class="card"><h2>${NM[cur]}</h2><div class="big">${brl(r.tot)}</div>
+  const aj=[];if(r.cap.aj)[["sp","Adic. sem contrib."],["rc","Adic. com contrib."],["sb","Salário base"]].forEach(([k,t])=>{if(r.cap[k]!==d[k])aj.push(`${t}: ${brl(d[k])} → ${brl(r.cap[k])}`)});
+  document.getElementById("out").innerHTML=`<div class="card"><h2>${cur==="a"?"Pensão":NM[cur]}</h2><div class="big">${brl(r.tot)}</div>
     <div class="bar"><i style="width:${isFinite(pc)?pc:0}%"></i></div>
-    <div class="${ok?"ok":"bad"}">${isFinite(pc)?pc.toFixed(0):0}% da renda-alvo de ${brl(d.alvo)} (${ok?"sobra":"falta"} ${brl(Math.abs(r.tot-d.alvo))})</div>
-    ${r.aporteNec===null?"":`<div style="margin-top:10px;padding:10px 12px;border-left:4px solid var(--ac);background:var(--bg);border-radius:6px"><div style="font-size:12px;color:var(--mut)">Aporte mensal necessário no investimento privado para atingir a renda-alvo</div><div style="font-size:20px;font-weight:700">${r.aporteNec>0?brl(r.aporteNec):"Nenhum aporte adicional"}</div><div style="font-size:13px;color:var(--mut)">Aporte atual: ${brl(d.aporte)}${r.aporteNec>d.aporte?` (faltam ${brl(r.aporteNec-d.aporte)} por mês)`:" (suficiente)"}</div></div>`}
-    <div style="margin-top:8px">${r.linhas.map(([a,b])=>`<div class="row"><span>${a}</span><b>${brl(b)}</b></div>`).join("")}</div></div>
-    <div class="card"><h2>Referências</h2>
-    <div class="row"><span>Renda líquida mensal atual</span><b>${brl(r.atual)}</b></div>${cur==="c"?`
+    <div class="${ok?"ok":"bad"}">${isFinite(pc)?pc.toFixed(0):0}% da ${cur==="a"?"pensão alvo":"renda-alvo"} de ${brl(d.alvo)} (${ok?"sobra":"falta"} ${brl(Math.abs(r.tot-d.alvo))})</div>
+    ${r.aporteNec===null?"":`<div style="margin-top:10px;padding:10px 12px;border-left:4px solid var(--ac);background:var(--bg);border-radius:6px"><div style="font-size:12px;color:var(--mut)">Aporte mensal necessário no investimento privado para atingir ${cur==="a"?"a pensão alvo":"a renda-alvo"}</div><div style="font-size:20px;font-weight:700">${r.aporteNec>0?brl(r.aporteNec):"Nenhum aporte adicional"}</div><div style="font-size:13px;color:var(--mut)">Aporte atual: ${brl(d.aporte)}${r.aporteNec>d.aporte?` (faltam ${brl(r.aporteNec-d.aporte)} por mês)`:" (suficiente)"}</div></div>`}
+    <div style="margin-top:8px">${r.linhas.map(([a,b])=>`<div class="row"><span>${a}</span><b>${brl(b)}</b></div>`).join("")}${cur==="a"?"":`
+      <div class="row" style="margin-top:8px"><span>Projeção da Renda Vitalícia (${pcts(r.perp.tx,2)} a.a. sobre o saldo de ${brl(r.perp.saldo)}${cur==="c"?", previdência complementar + investimentos privados":", investimento privado"})</span><b>${brl(r.perp.renda)}</b></div>
+      <div class="row"><span><b>Renda total pelo método da Renda Vitalícia</b></span><b>${brl(r.perp.total)}</b></div>`}</div></div>
+    <div class="card"><h2>Referências</h2>${aj.length?`<div class="row" style="flex-direction:column;gap:2px"><span>Remuneração limitada ao teto remuneratório (${brl(d.teto)})</span><b style="font-weight:600;font-size:13px">${aj.join("; ")}</b></div>`:""}
+    <div class="row"><span>${cur==="a"?"Aposentadoria mensal líquida":"Salário mensal líquido"}</span><b>${brl(r.sal)}</b></div>
+    <div class="row"><span>${cur==="a"?"Aposentadoria + 13º mensalizado":"Salário + 13º e 1/3 de férias mensalizados"}</span><b>${brl(r.sal13)}</b></div>
+    <div class="row"><span>${cur==="a"?"Contribuição previdenciária mensal (inativo)":"Contribuição previdenciária mensal"}</span><b>${brl(r.cont)}</b></div>
+    <div class="row"><span>IR mensal</span><b>${brl(r.irm)}</b></div>
+    <div class="row"><span>Renda líquida mensal atual (com indenizações, outras rendas e cônjuge)</span><b>${brl(r.atual)}</b></div>${cur==="m"?(r.usouScm?`
+    <div class="row"><span>Aposentadoria bruta informada</span><b>${brl(r.bruto)}</b></div>
+    <div class="row"><span>Previdência e IR sobre a aposentadoria</span><b>${brl(r.bruto-r.baseM)}</b></div>
+    <div class="row"><span>Aposentadoria líquida (base dos proventos)</span><b>${brl(r.baseM)}</b></div>`:`
+    <div class="row"><span>Base dos proventos: remuneração líquida atual</span><b>${brl(r.baseM)}</b></div>
+    <div class="row"><span>Percentual aplicado sobre a base</span><b>${pcts(r.coef,0)}</b></div>`):""}${cur==="c"?`
     <div class="row"><span>Aporte mensal do participante</span><b>${brl(r.part)}</b></div>
-    <div class="row"><span>Investido por mês (x2 patrocinador, menos carregamento)</span><b>${brl(r.pcAp)}</b></div>`:""}</div>`;
+    <div class="row"><span>Investido por mês (x2 patrocinador, menos carregamento)</span><b>${brl(r.pcAp)}</b></div>`:""}${cur==="a"?`
+    <div class="row"><span>Hoje: aposentadoria líquida com 13º</span><b>${brl(r.apo.aposLiq13)}</b></div>
+    <div class="row"><span>Hoje: renda vitalícia dos investimentos atuais (saldo de ${brl(r.apo.saldoHoje)})</span><b>${brl(r.apo.rpHoje)}</b></div>
+    <div class="row"><span><b>Hoje: renda total (aposentadoria + outras rendas + renda vitalícia)</b></span><b>${brl(r.apo.totHoje)}</b></div>
+    <div class="row"><span>Pensão: cota familiar (60% + 10% por filho menor)</span><b>${pcts(r.apo.cota,0)}</b></div>
+    <div class="row"><span>Pensão bruta</span><b>${brl(r.apo.pb)}</b></div>
+    <div class="row"><span>Previdência e IR sobre a pensão</span><b>${brl(r.apo.pensCp+r.apo.pensIr)}</b></div>
+    <div class="row"><span>Idade do cônjuge no início da pensão (expectativa de vida: ${r.apo.ret} anos)</span><b>${r.apo.idPens.toFixed(0)} anos</b></div>`:""}</div>`;
   if(showRep)renderRep(d,P,r);
+  vrCalc();
+  if(showRank)rkRender();
 }
 function renderRep(d,P,r){
   const isC=cur==="c",n=r.n,priv=series(d.saldo,d.aporte,P.txPriv,n),pc=isC?series(r.pcInit,r.pcAp,P.txPC,n):null;
@@ -150,11 +334,268 @@ async function gerarPdf(){
     msg.textContent="PDF gerado.";
   }catch(e){msg.textContent=e&&e.code==="declined"?"Download cancelado.":"Não foi possível gerar o PDF."+(e&&e.message?" ("+e.message+")":"")}
 }
+/*VR*/
+
+const IPCA_DEF={"2016-06": 0.35, "2016-07": 0.52, "2016-08": 0.44, "2016-09": 0.08, "2016-10": 0.26, "2016-11": 0.18, "2016-12": 0.3, "2017-01": 0.38, "2017-02": 0.33, "2017-03": 0.25, "2017-04": 0.14, "2017-05": 0.31, "2017-06": -0.23, "2017-07": 0.24, "2017-08": 0.19, "2017-09": 0.16, "2017-10": 0.42, "2017-11": 0.28, "2017-12": 0.44, "2018-01": 0.29, "2018-02": 0.32, "2018-03": 0.09, "2018-04": 0.22, "2018-05": 0.4, "2018-06": 1.26, "2018-07": 0.33, "2018-08": -0.09, "2018-09": 0.48, "2018-10": 0.45, "2018-11": -0.21, "2018-12": 0.15, "2019-01": 0.32, "2019-02": 0.43, "2019-03": 0.75, "2019-04": 0.57, "2019-05": 0.13, "2019-06": 0.01, "2019-07": 0.19, "2019-08": 0.11, "2019-09": -0.04, "2019-10": 0.1, "2019-11": 0.51, "2019-12": 1.15, "2020-01": 0.21, "2020-02": 0.25, "2020-03": 0.07, "2020-04": -0.31, "2020-05": -0.38, "2020-06": 0.26, "2020-07": 0.36, "2020-08": 0.24, "2020-09": 0.64, "2020-10": 0.86, "2020-11": 0.89, "2020-12": 1.35, "2021-01": 0.25, "2021-02": 0.86, "2021-03": 0.93, "2021-04": 0.31, "2021-05": 0.83, "2021-06": 0.53, "2021-07": 0.96, "2021-08": 0.87, "2021-09": 1.16, "2021-10": 1.25, "2021-11": 0.95, "2021-12": 0.73, "2022-01": 0.54, "2022-02": 1.01, "2022-03": 1.62, "2022-04": 1.06, "2022-05": 0.47, "2022-06": 0.67, "2022-07": -0.68, "2022-08": -0.36, "2022-09": -0.29, "2022-10": 0.59, "2022-11": 0.41, "2022-12": 0.62, "2023-01": 0.53, "2023-02": 0.84, "2023-03": 0.71, "2023-04": 0.61, "2023-05": 0.23, "2023-06": -0.08, "2023-07": 0.12, "2023-08": 0.23, "2023-09": 0.26, "2023-10": 0.24, "2023-11": 0.28, "2023-12": 0.56, "2024-01": 0.42, "2024-02": 0.83, "2024-03": 0.16, "2024-04": 0.38, "2024-05": 0.46, "2024-06": 0.21, "2024-07": 0.38, "2024-08": -0.02, "2024-09": 0.44, "2024-10": 0.56, "2024-11": 0.39, "2024-12": 0.52, "2025-01": 0.16, "2025-02": 1.31, "2025-03": 0.56, "2025-04": 0.43, "2025-05": 0.26, "2025-06": 0.24, "2025-07": 0.26, "2025-08": -0.11, "2025-09": 0.48, "2025-10": 0.09, "2025-11": 0.18, "2025-12": 0.33, "2026-01": 0.33, "2026-02": 0.7, "2026-03": 0.88, "2026-04": 0.67, "2026-05": 0.58, "2026-06": 0.16, "2026-07": 0.07, "2026-08": -0.32};
+const pad=n=>String(n).padStart(2,"0");
+const num=s=>parseFloat(String(s).replace(/\./g,"").replace(",","."));
+function parseText(t){
+  const flat=t.replace(/\s+/g," ");const ap={};let n=0;
+  t.split(/\r?\n/).forEach(l=>{
+    const m=l.replace(/\s+/g," ").trim().match(/^(\d{2})\/(\d{4}) B[ÁA]SICA PATROCINADO - APOSENT\S* R\$ ?([\d.]+,\d{2})/i);
+    if(m){const mes=+m[1],ano=m[2],k=ano+"-"+(mes===13?"12":pad(mes));ap[k]=Math.round(((ap[k]||0)+num(m[3]))*100)/100;n++}
+  });
+  const s=flat.match(/SALDO TOTAL Participante Empresa Total ([\d.]+,\d{2}) ([\d.]+,\d{2}) ([\d.]+,\d{2})/i);
+  const e=flat.match(/\d{2}\/\d{2}\/\d{4} (\d{2})\/(\d{2})\/(\d{4}) \d{2}:\d{2}:\d{2}/);
+  return{ap,linhas:n,saldo:s?num(s[3]):null,emissao:e?{d:+e[1],m:+e[2],y:+e[3]}:null};
+}
+function groupLines(items){
+  items=items.filter(i=>i.s.trim()).sort((a,b)=>b.y-a.y||a.x-b.x);
+  const lines=[];let cur=[],cy=null;
+  const flush=()=>{if(cur.length)lines.push(cur.sort((a,b)=>a.x-b.x).map(i=>i.s.trim()).join(" "))};
+  for(const it of items){if(cy===null||Math.abs(it.y-cy)>3){flush();cur=[it];cy=it.y}else cur.push(it)}
+  flush();return lines;
+}
+const mIdx=k=>{const[y,m]=k.split("-");return +y*12+(+m-1)};
+const mKey=i=>Math.floor(i/12)+"-"+pad(i%12+1);
+function monthsRange(a,b){const r=[];for(let i=mIdx(a);i<=mIdx(b);i++)r.push(mKey(i));return r}
+function simulate(months,ap,ip,mult,addMeta,r){
+  let E=0,G=0,J=0,M=0;const out=[];
+  for(const k of months){
+    const b=(ap[k]||0)*mult,D=1+ip[k]/100;
+    E+=b;G=(G+b)*D;J=(J+b)*(D+addMeta);M=(M+b)*(D+r);
+    out.push({k,b,E,G,J,M,ip:ip[k]});
+  }
+  return out;
+}
+function solve(months,ap,ip,mult,addMeta,saldo){
+  let lo=-0.2,hi=0.2;
+  for(let i=0;i<80;i++){const mid=(lo+hi)/2,v=simulate(months,ap,ip,mult,addMeta,mid).pop().M;if(v<saldo)lo=mid;else hi=mid}
+  return(lo+hi)/2;
+}
+
+/*VREND*/
+const $v=id=>document.getElementById(id);
+const pcts=(x,d=2)=>(x*100).toFixed(d).replace(".",",")+"%";
+let VAP={},VIPU={};
+function vrStatus(t,c){$v("vr_st").innerHTML=t;$v("vr_st").className="msg "+(c||"");$v("vr_st").style.margin="0"}
+function vrApply(p,origem){
+  if(!p.linhas){vrStatus("Não encontrei linhas de contribuição \"BÁSICA PATROCINADO - APOSENT\" neste "+origem+". Confira se é o extrato de contribuições do RS-PREV, ou use o campo de texto colado.","bad");return}
+  VAP=p.ap;VIPU={};
+  if(p.saldo!=null)$v("c_pcS").value=p.saldo;
+  if(p.emissao){const d=new Date(p.emissao.y,p.emissao.m-2,1);$v("vr_ref").value=d.getFullYear()+"-"+pad(d.getMonth()+1)}
+  const ks=Object.keys(VAP).sort();
+  vrStatus(`Extrato lido: ${p.linhas} lançamentos em ${ks.length} meses (${ks[0].split("-").reverse().join("/")} a ${ks[ks.length-1].split("-").reverse().join("/")}).${p.saldo!=null?" Saldo do extrato ("+brl(p.saldo)+") aplicado em \"Saldo atual da PrevComple\".":" Não encontrei o saldo total: informe-o em \"Saldo atual da PrevComple\"."}`,"ok");
+  vrTables();run();
+}
+async function vrReadPdf(file){
+  vrStatus("Lendo o PDF...");
+  try{
+    if(!window.pdfjsLib)throw new Error("biblioteca de PDF indisponível");
+    pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;let txt="";
+    for(let p=1;p<=pdf.numPages;p++){
+      const tc=await(await pdf.getPage(p)).getTextContent();
+      txt+=groupLines(tc.items.map(i=>({s:i.str,x:i.transform[4],y:i.transform[5]}))).join("\n")+"\n";
+    }
+    vrApply(parseText(txt),"PDF");
+  }catch(e){vrStatus("Não consegui ler o PDF ("+(e&&e.message?e.message:"erro")+"). Use o campo de texto colado logo abaixo.","bad")}
+}
+function vrIpca(k){
+  if(VIPU[k]!=null)return VIPU[k];
+  if(IPCA_DEF[k]!==undefined)return IPCA_DEF[k];
+  return k>"2026-08"?(parseFloat($v("vr_est").value)||0):0;
+}
+function vrRange(){
+  const ks=Object.keys(VAP).filter(k=>VAP[k]>0).sort(),ref=$v("vr_ref").value;
+  if(!ks.length||!ref||ref<ks[0])return null;
+  return monthsRange(ks[0],ref);
+}
+function vrTables(){
+  const ks=Object.keys(VAP).sort(),ms=vrRange();
+  $v("vr_tap").innerHTML=ks.length?`<table><thead><tr><th>Mês</th><th>Aporte do participante (R$)</th></tr></thead><tbody>${ks.map(k=>`<tr><td>${k.split("-").reverse().join("/")}</td><td><input type="number" step="any" data-ap="${k}" value="${VAP[k]}"></td></tr>`).join("")}</tbody></table>`:"";
+  $v("vr_tip").innerHTML=ms?`<table><thead><tr><th>Mês</th><th>IPCA (%)</th></tr></thead><tbody>${ms.map(k=>`<tr><td>${k.split("-").reverse().join("/")}</td><td><input type="number" step="any" data-ip="${k}" value="${vrIpca(k)}"></td></tr>`).join("")}</tbody></table>`:"";
+  document.querySelectorAll("[data-ap]").forEach(i=>i.addEventListener("input",()=>{VAP[i.dataset.ap]=parseFloat(i.value)||0;vrCalc()}));
+  document.querySelectorAll("[data-ip]").forEach(i=>i.addEventListener("input",()=>{VIPU[i.dataset.ip]=i.value===""?null:parseFloat(i.value);vrCalc()}));
+}
+function vrChart(R){
+  const W=720,H=260,L=60,B=24,T=10,n=R.length;if(n<2)return"";
+  const ser=[["E","var(--c1)"],["G","var(--c2)"],["J","var(--c3)"],["M","var(--c4)"]];
+  const mx=Math.max(...R.map(r=>Math.max(r.E,r.G,r.J,r.M)))||1;
+  const X=i=>L+(W-L-8)*i/(n-1),Y=x=>T+(H-T-B)*(1-x/mx);
+  let s=`<svg class="vrc" viewBox="0 0 ${W} ${H}" style="width:100%;height:auto" role="img" aria-label="Evolução dos saldos">`;
+  for(let g=0;g<=4;g++){const x=mx*g/4;s+=`<line x1="${L}" x2="${W-8}" y1="${Y(x)}" y2="${Y(x)}" stroke="var(--ln)"/><text x="${L-6}" y="${Y(x)+4}" text-anchor="end">${Math.round(x/1000)}k</text>`}
+  R.forEach((r,i)=>{if(r.k.endsWith("-01")||i===0||i===n-1)s+=`<text x="${X(i)}" y="${H-6}" text-anchor="middle">${r.k.slice(5)}/${r.k.slice(2,4)}</text>`});
+  ser.forEach(([f,c])=>{s+=`<polyline fill="none" stroke="${c}" stroke-width="2.2" points="${R.map((r,i)=>X(i).toFixed(1)+","+Y(r[f]).toFixed(1)).join(" ")}"/>`});
+  return s+"</svg>";
+}
+function vrCalc(){
+  const box=$v("vr");box.style.display=cur==="c"?"":"none";
+  if(!Object.keys(VAP).length){box.innerHTML="";return}
+  const ms=vrRange(),saldo=parseFloat($v("c_pcS").value),a=(parseFloat($v("vr_meta").value)||0)/100,mult=parseFloat($v("vr_mult").value)||0;
+  const hd='<h2 style="margin:8px 0 12px">Verificador de resultados do RS-PREV</h2>';
+  if(!ms||!(saldo>0)){box.innerHTML=hd+`<div class="card"><p class="mut" style="margin:0;color:var(--mut)">Informe o saldo em "Saldo atual da PrevComple" e o mês de referência (em "Ajustes do verificador") para ver o resultado.</p></div>`;return}
+  const ip={},sem=[];ms.forEach(k=>{ip[k]=vrIpca(k);if(VIPU[k]==null&&IPCA_DEF[k]===undefined&&k<"2026-09")sem.push(k)});
+  $v("vr_warn").innerHTML=sem.length?`<span class="bad">Sem IPCA para ${sem.length} mês(es) (a partir de ${sem[0].split("-").reverse().join("/")}); foi usado 0%. A série embutida começa em 06/2016; preencha a tabela de IPCA para maior precisão.</span>`:"";
+  const hm=Math.round(Math.pow(1+a,1/12)*1e6)/1e6,addMeta=hm-1;
+  const r=solve(ms,VAP,ip,mult,addMeta,saldo),R=simulate(ms,VAP,ip,mult,addMeta,r),last=R[R.length-1];
+  const anual=Math.pow(1+r,12)-1,ok=anual>=a,dif=saldo-last.J;
+  const kpi=(t,x,s,c)=>`<div class="kpi"><small>${t}</small><div class="big ${c||""}">${x}</div><small>${s||""}</small></div>`;
+  box.innerHTML=hd+`<div class="res" style="margin-bottom:16px">
+    ${kpi("Resultado real do seu plano",`IPCA + ${pcts(anual)} a.a.`,"Rentabilidade real que leva seus aportes ao saldo informado",ok?"ok":"bad")}
+    ${kpi("Meta",`IPCA + ${pcts(a)} a.a.`,ok?`Meta atingida (${pcts(anual-a)} a.a. acima)`:`Meta não atingida (${pcts(a-anual)} a.a. abaixo)`,ok?"ok":"bad")}
+    ${kpi("Saldo informado x saldo da meta",(dif>=0?"+":"")+brl(dif),`Saldo ${brl(saldo)} contra meta ${brl(last.J)}`,dif>=0?"ok":"bad")}</div>
+  <div class="card"><h2>Posição em ${ms[ms.length-1].split("-").reverse().join("/")}</h2>
+    <div class="row"><span>Total aportado (participante + contrapartida)</span><b>${brl(last.E)}</b></div>
+    <div class="row"><span>Aportes corrigidos apenas pelo IPCA</span><b>${brl(last.G)}</b></div>
+    <div class="row"><span>Saldo da meta (IPCA + ${pcts(a)} a.a.)</span><b>${brl(last.J)}</b></div>
+    <div class="row"><span>Saldo do RS-PREV informado</span><b>${brl(saldo)}</b></div>
+    <div class="row"><span>Ganho do saldo sobre os aportes</span><b>${brl(saldo-last.E)}</b></div>
+    <div class="row"><span>Ganho acima do IPCA</span><b>${brl(saldo-last.G)}</b></div></div>
+  <div class="card"><h2>Evolução</h2>${vrChart(R)}
+    <div class="lg"><span><i style="background:var(--c1)"></i>Aportes acumulados</span><span><i style="background:var(--c2)"></i>Corrigido pelo IPCA</span><span><i style="background:var(--c3)"></i>Meta</span><span><i style="background:var(--c4)"></i>RS-PREV (simulado)</span></div></div>
+  <div class="card"><h2>Acompanhamento mensal do RS-PREV</h2><div class="tw"><table><thead><tr><th>Mês</th><th>Aporte total</th><th>IPCA</th><th>Aportes acum.</th><th>Corrigido IPCA</th><th>Meta</th><th>RS-PREV</th></tr></thead><tbody>${R.map(x=>`<tr><td>${x.k.split("-").reverse().join("/")}</td><td>${brl(x.b)}</td><td>${x.ip.toFixed(2).replace(".",",")}%</td><td>${brl(x.E)}</td><td>${brl(x.G)}</td><td>${brl(x.J)}</td><td>${brl(x.M)}</td></tr>`).join("")}</tbody></table></div></div>`;
+}
+{const d=new Date();d.setMonth(d.getMonth()-1);$v("vr_ref").value=d.getFullYear()+"-"+pad(d.getMonth()+1)}
+$v("vr_btn").addEventListener("click",()=>$v("vr_pdf").click());
+$v("vr_pdf").addEventListener("change",e=>{if(e.target.files[0])vrReadPdf(e.target.files[0])});
+$v("vr_bt").addEventListener("click",()=>vrApply(parseText($v("vr_txt").value),"texto"));
+$v("vr_ref").addEventListener("input",()=>{vrTables();vrCalc()});
+const INPC_SC={"1994-07": 7.75, "1994-08": 1.85, "1994-09": 1.4, "1994-10": 2.82, "1994-11": 2.96, "1994-12": 1.7, "1995-01": 1.44, "1995-02": 1.01, "1995-03": 1.62, "1995-04": 2.49, "1995-05": 2.1, "1995-06": 2.18, "1995-07": 2.46, "1995-08": 1.02, "1995-09": 1.17, "1995-10": 1.4, "1995-11": 1.51, "1995-12": 1.65, "1996-01": 1.46, "1996-02": 0.71, "1996-03": 0.29, "1996-04": 0.93, "1996-05": 1.28, "1996-06": 1.33, "1996-07": 1.2, "1996-08": 0.5, "1996-09": 0.02, "1996-10": 0.38, "1996-11": 0.34, "1996-12": 0.33, "1997-01": 0.81, "1997-02": 0.45, "1997-03": 0.68, "1997-04": 0.6, "1997-05": 0.11, "1997-06": 0.35, "1997-07": 0.18, "1997-08": -0.03, "1997-09": 0.1, "1997-10": 0.29, "1997-11": 0.15, "1997-12": 0.57, "1998-01": 0.85, "1998-02": 0.54, "1998-03": 0.49, "1998-04": 0.45, "1998-05": 0.72, "1998-06": 0.15, "1998-07": -0.28, "1998-08": -0.49, "1998-09": -0.31, "1998-10": 0.11, "1998-11": -0.18, "1998-12": 0.42, "1999-01": 0.65, "1999-02": 1.29, "1999-03": 1.28, "1999-04": 0.47, "1999-05": 0.05, "1999-06": 0.07, "1999-07": 0.74, "1999-08": 0.55, "1999-09": 0.39, "1999-10": 0.96, "1999-11": 0.94, "1999-12": 0.74, "2000-01": 0.61, "2000-02": 0.05, "2000-03": 0.13, "2000-04": 0.09, "2000-05": -0.05, "2000-06": 0.3, "2000-07": 1.39, "2000-08": 1.21, "2000-09": 0.43, "2000-10": 0.16, "2000-11": 0.29, "2000-12": 0.55, "2001-01": 0.77, "2001-02": 0.49, "2001-03": 0.48, "2001-04": 0.84, "2001-05": 0.57, "2001-06": 0.6, "2001-07": 1.11, "2001-08": 0.79, "2001-09": 0.44, "2001-10": 0.94, "2001-11": 1.29, "2001-12": 0.74, "2002-01": 1.07, "2002-02": 0.31, "2002-03": 0.62, "2002-04": 0.68, "2002-05": 0.09, "2002-06": 0.61, "2002-07": 1.15, "2002-08": 0.86, "2002-09": 0.83, "2002-10": 1.57, "2002-11": 3.39, "2002-12": 2.7, "2003-01": 2.47, "2003-02": 1.46, "2003-03": 1.37, "2003-04": 1.38, "2003-05": 0.99, "2003-06": -0.06, "2003-07": 0.04, "2003-08": 0.18, "2003-09": 0.82, "2003-10": 0.39, "2003-11": 0.37, "2003-12": 0.54, "2004-01": 0.83, "2004-02": 0.39, "2004-03": 0.57, "2004-04": 0.41, "2004-05": 0.4, "2004-06": 0.5, "2004-07": 0.73, "2004-08": 0.5, "2004-09": 0.17, "2004-10": 0.17, "2004-11": 0.44, "2004-12": 0.86, "2005-01": 0.57, "2005-02": 0.44, "2005-03": 0.73, "2005-04": 0.91, "2005-05": 0.7, "2005-06": -0.11, "2005-07": 0.03, "2005-08": 0.0, "2005-09": 0.15, "2005-10": 0.58, "2005-11": 0.54, "2005-12": 0.4, "2006-01": 0.38, "2006-02": 0.23, "2006-03": 0.27, "2006-04": 0.12, "2006-05": 0.13, "2006-06": -0.07, "2006-07": 0.11, "2006-08": -0.02, "2006-09": 0.16, "2006-10": 0.43, "2006-11": 0.42, "2006-12": 0.62, "2007-01": 0.49, "2007-02": 0.42, "2007-03": 0.44, "2007-04": 0.26, "2007-05": 0.26, "2007-06": 0.31, "2007-07": 0.32, "2007-08": 0.59, "2007-09": 0.25, "2007-10": 0.3, "2007-11": 0.43, "2007-12": 0.97, "2008-01": 0.69, "2008-02": 0.48, "2008-03": 0.51, "2008-04": 0.64, "2008-05": 0.96, "2008-06": 0.91, "2008-07": 0.58, "2008-08": 0.21, "2008-09": 0.15, "2008-10": 0.5, "2008-11": 0.38, "2008-12": 0.29, "2009-01": 0.64, "2009-02": 0.31, "2009-03": 0.2, "2009-04": 0.55, "2009-05": 0.6, "2009-06": 0.42, "2009-07": 0.23, "2009-08": 0.08, "2009-09": 0.16, "2009-10": 0.24, "2009-11": 0.37, "2009-12": 0.24, "2010-01": 0.88, "2010-02": 0.7, "2010-03": 0.71, "2010-04": 0.73, "2010-05": 0.43, "2010-06": -0.11, "2010-07": -0.07, "2010-08": -0.07, "2010-09": 0.54, "2010-10": 0.92, "2010-11": 1.03, "2010-12": 0.6, "2011-01": 0.94, "2011-02": 0.54, "2011-03": 0.66, "2011-04": 0.72, "2011-05": 0.57, "2011-06": 0.22, "2011-07": 0.0, "2011-08": 0.42, "2011-09": 0.45, "2011-10": 0.32, "2011-11": 0.57, "2011-12": 0.51, "2012-01": 0.51, "2012-02": 0.39, "2012-03": 0.18, "2012-04": 0.64, "2012-05": 0.55, "2012-06": 0.26, "2012-07": 0.43, "2012-08": 0.45, "2012-09": 0.63, "2012-10": 0.71, "2012-11": 0.54, "2012-12": 0.74, "2013-01": 0.92, "2013-02": 0.52, "2013-03": 0.6, "2013-04": 0.59, "2013-05": 0.35, "2013-06": 0.28, "2013-07": -0.13, "2013-08": 0.16, "2013-09": 0.27, "2013-10": 0.61, "2013-11": 0.54, "2013-12": 0.72, "2014-01": 0.63, "2014-02": 0.64, "2014-03": 0.82, "2014-04": 0.78, "2014-05": 0.6, "2014-06": 0.26, "2014-07": 0.13, "2014-08": 0.18, "2014-09": 0.49, "2014-10": 0.38, "2014-11": 0.53, "2014-12": 0.62, "2015-01": 1.48, "2015-02": 1.16, "2015-03": 1.51, "2015-04": 0.71, "2015-05": 0.99, "2015-06": 0.77, "2015-07": 0.58, "2015-08": 0.25, "2015-09": 0.51, "2015-10": 0.77, "2015-11": 1.11, "2015-12": 0.9, "2016-01": 1.51, "2016-02": 0.95, "2016-03": 0.44, "2016-04": 0.64, "2016-05": 0.98, "2016-06": 0.47, "2016-07": 0.64, "2016-08": 0.31, "2016-09": 0.08, "2016-10": 0.17, "2016-11": 0.07, "2016-12": 0.14, "2017-01": 0.42, "2017-02": 0.24, "2017-03": 0.32, "2017-04": 0.08, "2017-05": 0.36, "2017-06": -0.3, "2017-07": 0.17, "2017-08": -0.03, "2017-09": -0.02, "2017-10": 0.37, "2017-11": 0.18, "2017-12": 0.26, "2018-01": 0.23, "2018-02": 0.18, "2018-03": 0.07, "2018-04": 0.21, "2018-05": 0.43, "2018-06": 1.43, "2018-07": 0.25, "2018-08": 0.0, "2018-09": 0.3, "2018-10": 0.4, "2018-11": -0.25, "2018-12": 0.14, "2019-01": 0.36, "2019-02": 0.54, "2019-03": 0.77, "2019-04": 0.6, "2019-05": 0.15, "2019-06": 0.01, "2019-07": 0.1, "2019-08": 0.12, "2019-09": -0.05, "2019-10": 0.04, "2019-11": 0.54, "2019-12": 1.22, "2020-01": 0.19, "2020-02": 0.17, "2020-03": 0.18, "2020-04": -0.23, "2020-05": -0.25, "2020-06": 0.3, "2020-07": 0.44, "2020-08": 0.36, "2020-09": 0.87, "2020-10": 0.89, "2020-11": 0.95, "2020-12": 1.46, "2021-01": 0.27, "2021-02": 0.82, "2021-03": 0.86, "2021-04": 0.38, "2021-05": 0.96, "2021-06": 0.6, "2021-07": 1.02, "2021-08": 0.88, "2021-09": 1.2, "2021-10": 1.16, "2021-11": 0.84, "2021-12": 0.73, "2022-01": 0.67, "2022-02": 1.0, "2022-03": 1.71, "2022-04": 1.04, "2022-05": 0.45, "2022-06": 0.62, "2022-07": -0.6, "2022-08": -0.31, "2022-09": -0.32, "2022-10": 0.47, "2022-11": 0.38, "2022-12": 0.69, "2023-01": 0.46, "2023-02": 0.77, "2023-03": 0.64, "2023-04": 0.53, "2023-05": 0.36, "2023-06": -0.1, "2023-07": -0.09, "2023-08": 0.2, "2023-09": 0.11, "2023-10": 0.12, "2023-11": 0.1, "2023-12": 0.55, "2024-01": 0.57, "2024-02": 0.81, "2024-03": 0.19, "2024-04": 0.37, "2024-05": 0.46, "2024-06": 0.25, "2024-07": 0.26, "2024-08": -0.14, "2024-09": 0.48, "2024-10": 0.61, "2024-11": 0.33, "2024-12": 0.48, "2025-01": 0.0, "2025-02": 1.48, "2025-03": 0.51, "2025-04": 0.48, "2025-05": 0.35, "2025-06": 0.23, "2025-07": 0.21, "2025-08": -0.21, "2025-09": 0.52, "2025-10": 0.03, "2025-11": 0.03, "2025-12": 0.21, "2026-01": 0.39, "2026-02": 0.56, "2026-03": 0.91, "2026-04": 0.81, "2026-05": 0.65, "2026-06": 0.14, "2026-07": -0.01, "2026-08": -0.32};
+const SCV={};
+let scAuto=false;
+function scRef(){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-1);return d.getFullYear()+"-"+pad(d.getMonth()+1)}
+function scIdx(k){if(INPC_SC[k]!==undefined)return INPC_SC[k];return k>"2026-08"?(parseFloat($v("sc_est").value)||0):0}
+function scMes(x){
+  if(x==null||x==="")return null;
+  if(x instanceof Date&&!isNaN(x))return x.getUTCFullYear()+"-"+pad(x.getUTCMonth()+1);
+  if(typeof x==="number"){if(x<30000||x>80000)return null;const d=new Date(Date.UTC(1899,11,30)+Math.floor(x)*86400000);return d.getUTCFullYear()+"-"+pad(d.getUTCMonth()+1)}
+  const s=String(x).trim();
+  let m=s.match(/^(\d{4})\s*[\/\-.]\s*(\d{1,2})$/);if(m)return(+m[2]>=1&&+m[2]<=12)?m[1]+"-"+pad(+m[2]):null;
+  m=s.match(/^(\d{1,2})\s*[\/\-.]\s*(\d{4})$/);if(m)return(+m[1]>=1&&+m[1]<=12)?m[2]+"-"+pad(+m[1]):null;
+  return null;
+}
+function scValor(v){
+  if(typeof v==="number")return v;
+  if(v==null)return NaN;
+  let s=String(v).replace(/R\$|\s/g,"");
+  if(!s)return NaN;
+  if(s.includes(","))s=s.replace(/\./g,"").replace(",",".");
+  return parseFloat(s);
+}
+function scParse(rows,ref){
+  const out={},info={lidas:0,fora:0,invalidas:0,repetidas:0};
+  rows.forEach(r=>{
+    if(!r)return;
+    const k=scMes(r[0]),v=scValor(r[1]);
+    if(k===null){if(r[0]!=null&&r[0]!==""&&v>0)info.invalidas++;return}
+    if(!(v>0))return;
+    if(k<"1994-07"||k>ref){info.fora++;return}
+    if(out[k]!==undefined)info.repetidas++;
+    out[k]=v;info.lidas++;
+  });
+  return{out,info};
+}
+async function salvarArquivo(nome,buf,mime){
+  const dl=window.claude?await claude.use("downloads"):null;
+  if(dl){await dl.save({filename:nome,data:buf});return}
+  const url=URL.createObjectURL(new Blob([buf],{type:mime||"application/octet-stream"}));
+  const a=document.createElement("a");a.href=url;a.download=nome;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),3000);
+}
+async function scModelo(){
+  const st=$v("sc_st");
+  try{
+    if(!window.XLSX)throw new Error("biblioteca de Excel indisponível");
+    const rows=[["Ano/Mês","Salário de contribuição (R$)"]];
+    monthsRange("1994-07",scRef()).forEach(k=>rows.push([k.slice(0,4)+"/"+k.slice(5),null]));
+    const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(rows);ws["!cols"]=[{wch:12},{wch:30}];
+    XLSX.utils.book_append_sheet(wb,ws,"Salários");
+    const ins=XLSX.utils.aoa_to_sheet([["Como preencher"],["Preencha a coluna B com o salário de contribuição bruto de cada mês, em reais."],["Meses sem salário podem ficar em branco. Não altere a coluna A (aceita AAAA/MM, MM/AAAA ou data)."],["A primeira planilha (Salários) é a que o aplicativo lê. Períodos: de 07/1994 até o mês anterior à consulta."]]);
+    ins["!cols"]=[{wch:110}];XLSX.utils.book_append_sheet(wb,ins,"Instruções");
+    await salvarArquivo("modelo-salarios-de-contribuicao.xlsx",XLSX.write(wb,{bookType:"xlsx",type:"array"}),"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+  }catch(e){st.innerHTML=`<span class="bad">${e&&e.code==="declined"?"Download cancelado.":"Não consegui gerar o modelo ("+(e&&e.message?e.message:"erro")+")."}</span>`}
+}
+async function scLoad(file){
+  const st=$v("sc_st");st.innerHTML="Lendo o Excel...";
+  try{
+    if(!window.XLSX)throw new Error("biblioteca de Excel indisponível");
+    const wb=XLSX.read(new Uint8Array(await file.arrayBuffer()),{type:"array"});
+    const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:true,defval:null});
+    const ref=scRef(),{out,info}=scParse(rows,ref),ks=Object.keys(out).sort();
+    if(!ks.length){st.innerHTML='<span class="bad">Não encontrei salários válidos. Use o modelo: coluna A com o mês (AAAA/MM) e coluna B com o valor.</span>';return}
+    Object.keys(SCV).forEach(k=>delete SCV[k]);Object.assign(SCV,out);
+    const f=k=>k.slice(5)+"/"+k.slice(0,4),av=[];
+    if(info.fora)av.push(info.fora+" fora do período (antes de 07/1994 ou depois de "+f(ref)+") ignorado(s)");
+    if(info.repetidas)av.push(info.repetidas+" mês(es) repetido(s): vale o último valor");
+    if(info.invalidas)av.push(info.invalidas+" linha(s) com mês não reconhecido ignorada(s)");
+    st.innerHTML=`<span class="ok">Excel lido: ${ks.length} salários (${f(ks[0])} a ${f(ks[ks.length-1])}).</span>${av.length?` <small>${av.join("; ")}.</small>`:""}`;
+    $v("sc_box").hidden=false;scCalc();
+  }catch(e){st.innerHTML=`<span class="bad">Não consegui ler o Excel (${e&&e.message?e.message:"erro"}). Confira se é um arquivo .xlsx no formato do modelo.</span>`}
+  $v("sc_file").value="";
+}
+function scCalc(){
+  const ref=scRef(),f={};f[ref]=1;
+  for(let i=mIdx(ref)-1;i>=mIdx("1994-07");i--)f[mKey(i)]=f[mKey(i+1)]*(1+scIdx(mKey(i+1))/100);
+  const ks=Object.keys(SCV).sort(),n=ks.length,sum=$v("sc_sum"),scm=$v("m_scm");
+  if(!n){sum.innerHTML="Nenhum salário carregado.";$v("sc_tab").innerHTML="";if(scAuto){scm.value="";scAuto=false;run()}return}
+  let soma=0;const linhas=ks.map(k=>{const a=SCV[k]*f[k];soma+=a;return `<tr><td>${k.slice(5)}/${k.slice(0,4)}</td><td>${brl(SCV[k])}</td><td>${f[k].toFixed(4)}</td><td>${brl(a)}</td></tr>`});
+  $v("sc_tab").innerHTML=`<table><thead><tr><th>Mês</th><th>Salário</th><th>Fator INPC</th><th>Atualizado</th></tr></thead><tbody>${linhas.join("")}</tbody></table>`;
+  const idade=parseFloat($v("m_idade").value)||0,ret=parseFloat($v("m_ret").value)||0,mf=Math.round(Math.max(0,ret-idade)*12);
+  const cp=capTeto({sb:get("m_sb"),rc:get("m_rc"),sp:get("m_sp"),teto:get("m_teto")}),ativa=cp.sb+cp.rc;
+  const total=n+mf,media=Math.round((soma+ativa*mf)/total*100)/100;
+  const lim=$v("sc_sexo").value==="Feminino"?15:20,exc=Math.max(0,Math.floor((total-lim*12)/12)),coef=Math.min(1,0.6+0.02*exc);
+  const anos=m=>Math.floor(m/12)+" anos e "+(m%12)+" meses",bruto=Math.round(media*coef*100)/100,fm=k=>k.slice(5)+"/"+k.slice(0,4);
+  sum.innerHTML=`<b>${n}</b> salários carregados (${anos(n)}, de ${fm(ks[0])} a ${fm(ks[n-1])}), soma atualizada pelo INPC: ${brl(soma)}.<br>Até aposentar: ${anos(mf)} (de ${idade} para ${ret} anos), a ${brl(ativa)} por mês (salário base + adicional com contribuição${cp.aj?", limitado ao teto":""}), sem atualização.<br>Média simples: (${brl(soma)} + ${mf} × ${brl(ativa)}) ÷ ${total} meses = <b>${brl(media)}</b>.<br>Tempo total ao se aposentar: <b>${anos(total)}</b>. Excedente sobre ${lim} anos: <b>${exc}</b> ano(s), acréscimo de ${2*exc}%.<br>Aposentadoria: <b>${pcts(coef,0)}</b> da média (60% + ${2*exc}%${0.6+0.02*exc>1?", limitado a 100%":""}): <b>aposentadoria bruta ${brl(bruto)}</b>. Previdência e IR são descontados em seguida.`;
+  scm.value=bruto;scAuto=true;run();
+}
+$v("sc_btn").addEventListener("click",()=>$v("sc_file").click());
+$v("sc_file").addEventListener("change",e=>{if(e.target.files[0])scLoad(e.target.files[0])});
+$v("sc_model").addEventListener("click",scModelo);
+$v("sc_clear").addEventListener("click",()=>{Object.keys(SCV).forEach(k=>delete SCV[k]);scCalc();$v("sc_box").hidden=true;$v("sc_st").innerHTML="<small>Salários removidos. Opcional. O Excel é lido no seu navegador e não é enviado a nenhum servidor.</small>"});
+$v("sc_est").addEventListener("input",()=>{if(Object.keys(SCV).length)scCalc()});
+$v("sc_sexo").addEventListener("change",()=>{if(scAuto)scCalc()});
+$v("m_scm").addEventListener("input",()=>{scAuto=false});
+$v("uf").addEventListener("change",e=>{setUF(e.target.value);run()});
+["m_idade","m_ret","m_sb","m_rc","m_sp","m_teto"].forEach(id=>$v(id).addEventListener("input",()=>{if(scAuto)scCalc()}));
+let showRank=false;
+function ufCpssIn(c,rows,inss){
+  const l=UFD[c].lim,L=l==="teto"?inss:(l.sm?l.sm*SM:l.v);let i=0;rows.forEach(r=>{if(r[0]<L)i++});
+  const r=rows[Math.min(i,rows.length-1)];return Math.max(0,Math.round((L*r[1]-r[2])*100)/100);
+}
+function rkDados(){
+  const P0=lerP(),d0=lerD(),sel=document.getElementById("uf").value,out=[];
+  d0.pcS=null;d0.pcA=null;d0.scm=null;
+  UF_ORD.forEach(c=>{
+    const rows=ufRows(c),P=Object.assign({},P0),v=UFREM[c],n=x=>parseFloat(x)||0;
+    if(c!==sel){P.cp=rows.map(r=>({ate:r[0],al:r[1],pd:r[2]}));P.cpssIn=ufCpssIn(c,rows,P0.inss)}
+    const d=Object.assign({},d0,{teto:n(v.teto),sb:n(v.sb),rc:n(v.rc),sp:n(v.sp),extra:n(v.extra),indeniz:n(v.indeniz)});
+    const r=calc(cur,d,P);
+    out.push({c,n:UFD[c].n,teto:d.teto,sb:d.sb,ind:d.indeniz,atual:r.atual,tot:r.tot,vit:r.perp.total,rep:r.atual>0?r.tot/r.atual:0});
+  });
+  return out;
+}
+function rkRender(){
+  const box=document.getElementById("rk"),isA=cur==="a";
+  if(!document.getElementById("rk_ord")){
+    box.innerHTML=`<div class="card"><h2 id="rk_tit"></h2><p class="sub" style="margin-bottom:10px" id="rk_note"></p><label style="max-width:360px">Ordenar por<select id="rk_ord"></select></label><div class="tw" id="rk_tab" style="margin-top:10px;max-height:none"></div></div>`;
+    document.getElementById("rk_ord").addEventListener("change",rkRender);
+  }
+  const sel0=document.getElementById("rk_ord"),prev=sel0.value;
+  const L={tot:isA?"Pensão projetada":"Renda total na aposentadoria",vit:"Renda total pela renda vitalícia",atual:"Renda líquida mensal atual",sb:"Remuneração básica"};
+  const ks=isA?["tot","atual","sb"]:["tot","vit","atual","sb"],crit=ks.includes(prev)?prev:"tot";
+  sel0.innerHTML=ks.map(k=>`<option value="${k}"${k===crit?" selected":""}>${L[k]}</option>`).join("");
+  const D=rkDados().sort((a,b)=>b[crit]-a[crit]),sel=document.getElementById("uf").value;
+  document.getElementById("rk_tit").textContent="Ranking das Remunerações do Fisco: "+(isA?"Pensão (Aposentado)":NM[cur]);
+  document.getElementById("rk_note").textContent="Cada ente usa seus valores de referência (teto, remuneração básica e indenizações) e a sua tabela de contribuição. Idades, saldos, aportes, metas e premissas são os do regime selecionado. Dados pessoais opcionais (saldo da previdência complementar, aporte próprio e média dos salários) não entram no ranking.";
+  document.getElementById("rk_tab").innerHTML=`<table><thead><tr><th>#</th><th>Ente</th><th>Teto</th><th>Rem. básica</th><th>Indenizações</th><th>Renda líquida atual</th><th>${L.tot}</th>${isA?"":"<th>Pela renda vitalícia</th>"}<th>Taxa de reposição</th></tr></thead><tbody>${D.map((x,i)=>`<tr${x.c===sel?' style="font-weight:700;background:var(--bg)"':""}><td>${i+1}</td><td>${x.n}</td><td>${brl(x.teto)}</td><td>${brl(x.sb)}</td><td>${brl(x.ind)}</td><td>${brl(x.atual)}</td><td>${brl(x.tot)}</td>${isA?"":`<td>${brl(x.vit)}</td>`}<td>${pcts(x.rep,0)}</td></tr>`).join("")}</tbody></table>`;
+}
+document.getElementById("rkBtn").addEventListener("click",()=>{showRank=true;rkRender();document.getElementById("rk").scrollIntoView({behavior:"smooth"})});
 document.getElementById("repBtn").addEventListener("click",()=>{showRep=true;run();document.getElementById("rep").scrollIntoView({behavior:"smooth"})});
 document.querySelectorAll("#tabs button").forEach(b=>b.addEventListener("click",()=>{
   cur=b.dataset.s;
   document.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("on",x===b));
-  ["c","m","i"].forEach(s=>document.getElementById("grp_"+s).hidden=s!==cur);
+  ["c","m","i","a"].forEach(s=>document.getElementById("grp_"+s).hidden=s!==cur);
   document.getElementById("ptitle").textContent="Dados do regime "+NM[cur];run();}));
-document.querySelectorAll("input").forEach(i=>i.addEventListener("input",run));run();
+document.querySelectorAll("input").forEach(i=>i.addEventListener("input",run));document.querySelectorAll("select").forEach(i=>i.addEventListener("change",run));run();
 </script><footer class="ft">Calculadora produzida por Luciano Barboza Garcia</footer></main></body></html>
