@@ -174,11 +174,12 @@ const SCHTML=`<div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;a
 <p class="msg" id="sc_sum"></p>
 <details style="margin-top:8px"><summary>Ver salários carregados e atualizados</summary><div class="tw" id="sc_tab"></div></details>
 <p><button type="button" class="pbtn sec" id="sc_clear">Remover salários carregados</button></p></div>`;
+const ESTAGIOS=["Inicial","Intermediário","Final","Final com Abono","Aposentado"];
 const inp=(id,t,v)=>`<label>${t}<input id="${id}" type="number" step="any" value="${v}"></label>`;
 document.getElementById("forms").innerHTML=["c","m","i","a"].map(s=>{
   const dv=k=>(DD[s][k]!==undefined?DD[s][k]:RD[k]);
   const g=(l)=>l.map(([k,t])=>inp(s+"_"+k,(LBL[s]&&LBL[s][k])||t,dv(k))).join("");
-  return `<div class="grp" id="grp_${s}"${s!=="c"?" hidden":""}><h3>Dados do regime</h3><div class="grid">${g(COM)}</div><h3>Remuneração atual</h3><div class="grid">${g(REM)}</div>${s==="a"?`<h3>Cônjuge e dependentes (pensão)</h3><div class="grid">${g(APF)}</div>`:""}${s==="c"?`<h3>Previdência complementar</h3><div class="grid">${g(PCF)}</div>`+VRHTML:""}${s==="m"?`<h3>Proventos</h3><div class="grid">${g(SCMF)}</div><p style="margin:8px 0 0"><small>Em branco, os proventos são 70% da remuneração líquida atual. Preenchido (à mão ou pela grade abaixo), o valor é a aposentadoria bruta pela média: o app desconta previdência e IR e não aplica os 70%.</small></p>`+SCHTML:""}</div>`}).join("");
+  return `<div class="grp" id="grp_${s}"${s!=="c"?" hidden":""}><h3>Dados do regime</h3><div class="grid">${g(COM)}</div><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap"><h3>Remuneração atual</h3><label style="min-width:230px;margin-top:8px">Estágio na Carreira<select id="${s}_estagio">${ESTAGIOS.map(e=>`<option>${e}</option>`).join("")}</select></label></div><p class="msg est_msg" style="margin:0 0 8px"></p><div class="grid">${g(REM)}</div>${s==="a"?`<h3>Cônjuge e dependentes (pensão)</h3><div class="grid">${g(APF)}</div>`:""}${s==="c"?`<h3>Previdência complementar</h3><div class="grid">${g(PCF)}</div>`+VRHTML:""}${s==="m"?`<h3>Proventos</h3><div class="grid">${g(SCMF)}</div><p style="margin:8px 0 0"><small>Em branco, os proventos são 70% da remuneração líquida atual. Preenchido (à mão ou pela grade abaixo), o valor é a aposentadoria bruta pela média: o app desconta previdência e IR e não aplica os 70%.</small></p>`+SCHTML:""}</div>`}).join("");
 const tab=(p,rows,t)=>`<h3>${t}</h3><div class="tw" style="max-height:none"><table><thead><tr><th>Faixa</th><th>Até (R$)</th><th>Alíquota (%)</th><th>Parcela a deduzir (R$)</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${i+1}</td><td><input id="${p}${i}_ate" type="number" step="any" value="${r[0]}" style="margin:0"></td><td><input id="${p}${i}_al" type="number" step="any" value="${+(r[1]*100).toFixed(4)}" style="margin:0"></td><td><input id="${p}${i}_pd" type="number" step="any" value="${r[2]}" style="margin:0"></td></tr>`).join("")}</tbody></table></div>`;
 const SM=1621;
 const T14="Alíquota única de 14% sobre toda a base de contribuição (levantamento do Dieese, 2026).";
@@ -277,12 +278,42 @@ function carrRender(c){
   const f=flagSvg(c),cl=f===c?"":"";
   document.getElementById("carr").innerHTML=`<div class="fl" title="${u.n}">${f}</div><div class="tx"><div class="mt">${u.n}${c==="FED"?"":""}</div><div class="cg">${tbc(d.c)}</div><div class="mt">Lei da carreira: ${tbc(d.l)}</div><div class="mt">Carga horária: ${tbc(d.h)}</div></div>`;
 }
-function aplicaRem(c){const v=UFREM[c];["c","m","i","a"].forEach(s=>REMK.forEach(k=>{document.getElementById(s+"_"+k).value=v[k]}))}
+const ESTG={};ESTAGIOS.slice(1).forEach(e=>{ESTG[e]={}});
+/* Dados por estágio da carreira: ESTG["Final"].SP={teto:..,sb:..,rc:..,sp:..,extra:..,indeniz:..}. Sem dados, usa os do estágio Inicial. */
+let estagio="Inicial";
+function cpssRegime(c,s,r){
+  const rows=(c===document.getElementById("uf").value)?CPD:ufRows(c),P={cp:rows.map(x=>({ate:x[0],al:x[1],pd:x[2]}))};
+  const cp=capTeto({sb:parseFloat(r.sb)||0,rc:parseFloat(r.rc)||0,sp:parseFloat(r.sp)||0,teto:parseFloat(r.teto)||0});
+  let base=cp.sb+cp.rc;if(s==="c")base=Math.min(base,get("inss"));
+  return cpss(P,base);
+}
+function remRef(c,s){
+  const e=ESTG[estagio]&&ESTG[estagio][c];
+  if(e)return Object.assign({teto:"",sb:"",rc:"",sp:"",extra:"",indeniz:""},e);
+  const b=UFREM[c],ab=estagio==="Final com Abono";
+  if(estagio==="Aposentado")return Object.assign({},b,{indeniz:""},c==="RS"?{sp:"",extra:""}:{});
+  let r=b;
+  if((estagio==="Final"||estagio==="Intermediário"||ab)&&c!=="RS"){
+    const teto=parseFloat(b.teto)||0,sb=parseFloat(b.sb)||0;
+    r=Object.assign({},b,{sb:estagio==="Intermediário"?Math.round((sb+teto)/2*100)/100:teto});
+  }
+  if(ab){r=Object.assign({},r);r.extra=Math.round(((parseFloat(r.extra)||0)+cpssRegime(c,s||"m",r))*100)/100}
+  return r;
+}
+function estMsg(c){
+  let t="";const tem=ESTG[estagio]&&ESTG[estagio][c];
+  if(estagio!=="Inicial"&&!tem){
+    if(estagio==="Final com Abono")t=c==="RS"?"Rio Grande do Sul mantém os dados do estágio Inicial, e a contribuição previdenciária do regime próprio (sem a previdência complementar) é somada ao Extra-teto com IR já existente.":"Remuneração básica igual ao teto remuneratório, e o Extra-teto com IR recebe a contribuição previdenciária do regime próprio (sem a previdência complementar).";else if(estagio==="Final"||estagio==="Intermediário")t=c==="RS"?"Rio Grande do Sul mantém, neste estágio, os mesmos dados do estágio Inicial.":(estagio==="Final"?"Estágio Final: remuneração básica igual ao teto remuneratório.":"Estágio Intermediário: remuneração básica igual à média entre os estágios Inicial e Final.");
+    else if(estagio==="Aposentado")t=(c==="RS"?"Estágio Aposentado: indenizações, remuneração adicional sem contribuição previdenciária e extra-teto retirados; ":"Estágio Aposentado: indenizações retiradas; ")+"demais valores iguais aos do estágio Inicial (valores específicos ainda não cadastrados para "+UFD[c].n+").";else t="Valores do estágio "+estagio+" ainda não cadastrados para "+UFD[c].n+": exibindo os do estágio Inicial.";
+  }
+  document.querySelectorAll(".est_msg").forEach(e=>{e.textContent=t});
+}
+function aplicaRem(c){["c","m","i","a"].forEach(s=>{const v=remRef(c,s);REMK.forEach(k=>{document.getElementById(s+"_"+k).value=v[k]})})}
 function setUF(c){
   CPD=ufRows(c);renderCp();
   const L=ufLim(c);let i=0;CPD.forEach(r=>{if(r[0]<L)i++});const r=CPD[Math.min(i,CPD.length-1)];
   document.getElementById("cpssIn").value=Math.max(0,Math.round((L*r[1]-r[2])*100)/100);
-  ufMsg(c);aplicaRem(c);carrRender(c);
+  ufMsg(c);aplicaRem(c);carrRender(c);estMsg(c);
   document.getElementById("uf_msg").innerHTML+="<br><small>Teto e remuneração preenchidos com os valores padrão do ente (editáveis).</small>";
 }
 function renderCp(){
@@ -608,6 +639,7 @@ $v("sc_est").addEventListener("input",()=>{if(Object.keys(SCV).length)scCalc()})
 $v("sc_sexo").addEventListener("change",()=>{if(scAuto)scCalc()});
 $v("m_scm").addEventListener("input",()=>{scAuto=false});
 $v("uf").addEventListener("change",e=>{setUF(e.target.value);run()});
+["c","m","i","a"].forEach(s=>$v(s+"_estagio").addEventListener("change",e=>{estagio=e.target.value;["c","m","i","a"].forEach(t=>{$v(t+"_estagio").value=estagio});const c=$v("uf").value;aplicaRem(c);estMsg(c);run()}));
 ["m_idade","m_ret","m_sb","m_rc","m_sp","m_teto"].forEach(id=>$v(id).addEventListener("input",()=>{if(scAuto)scCalc()}));
 let showRank=false;
 function ufCpssIn(c,rows,inss){
@@ -618,7 +650,7 @@ function rkDados(){
   const P0=lerP(),dU=lerD(),d0=Object.assign({},dU),sel=document.getElementById("uf").value,out=[];
   d0.pcS=null;d0.pcA=null;d0.scm=null;
   UF_ORD.forEach(c=>{
-    const rows=ufRows(c),P=Object.assign({},P0),v=UFREM[c],n=x=>parseFloat(x)||0;
+    const rows=ufRows(c),P=Object.assign({},P0),v=remRef(c,cur),n=x=>parseFloat(x)||0;
     if(c!==sel){P.cp=rows.map(r=>({ate:r[0],al:r[1],pd:r[2]}));P.cpssIn=ufCpssIn(c,rows,P0.inss)}
     const d=c===sel?dU:Object.assign({},d0,{teto:n(v.teto),sb:n(v.sb),rc:n(v.rc),sp:n(v.sp),extra:n(v.extra),indeniz:n(v.indeniz)});
     const r=calc(cur,d,P);
@@ -638,7 +670,7 @@ function rkRender(){
   sel0.innerHTML=ks.map(k=>`<option value="${k}"${k===crit?" selected":""}>${L[k]}</option>`).join("");
   const D=rkDados().sort((a,b)=>b[crit]-a[crit]),sel=document.getElementById("uf").value;
   document.getElementById("rk_tit").textContent="Ranking das Remunerações do Fisco: "+(isA?"Pensão (Aposentado)":NM[cur]);
-  document.getElementById("rk_note").textContent="O ente selecionado na lista usa exatamente os dados que você digitou (inclusive os opcionais), por isso o ranking acompanha qualquer alteração sua. Os demais entes usam seus valores de referência (teto, remuneração básica e indenizações) e a sua tabela de contribuição. Idades, saldos, aportes, metas e premissas são os do regime selecionado.";
+  document.getElementById("rk_note").textContent="O ente selecionado na lista usa exatamente os dados que você digitou (inclusive os opcionais), por isso o ranking acompanha qualquer alteração sua. Os demais entes usam seus valores de referência do estágio da carreira selecionado (teto, remuneração básica e indenizações) e a sua tabela de contribuição. Idades, saldos, aportes, metas e premissas são os do regime selecionado.";
   document.getElementById("rk_tab").innerHTML=`<table><thead><tr><th>#</th><th>Ente</th><th>Teto</th><th>Rem. básica</th><th>Indenizações</th><th>Renda líquida atual</th><th>${L.tot}</th>${isA?"":"<th>Pela renda vitalícia</th>"}<th>Taxa de reposição</th></tr></thead><tbody>${D.map((x,i)=>`<tr${x.c===sel?' style="font-weight:700;background:var(--bg)"':""}><td>${i+1}</td><td>${x.n}</td><td>${brl(x.teto)}</td><td>${brl(x.sb)}</td><td>${brl(x.ind)}</td><td>${brl(x.atual)}</td><td>${brl(x.tot)}</td>${isA?"":`<td>${brl(x.vit)}</td>`}<td>${pcts(x.rep,0)}</td></tr>`).join("")}</tbody></table>`;
 }
 document.getElementById("rkBtn").addEventListener("click",()=>{showRank=true;rkRender();document.getElementById("rk").scrollIntoView({behavior:"smooth"})});
