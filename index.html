@@ -155,7 +155,7 @@ const PCF=[["pcS","Saldo atual da PrevComple (opcional)"],["pcA","Aporte mensal 
 const DD={c:{idade:35,ret:70,saldo:1000,aporte:2341.75,alvo:50000},m:{idade:45,ret:68,saldo:300000,aporte:3500,alvo:45000},i:{idade:50,ret:65,saldo:500000,aporte:2000,alvo:45000},a:{idade:70,ret:"",saldo:500,aporte:500,alvo:10000}};
 const LBL={a:{ret:"Expectativa de vida (anos; em branco: 100)",alvo:"Pensão alvo"}};
 const APF=[["idadeC","Idade do cônjuge"],["filhos","Quantidade de filhos menores"]];
-const RD={outras:"",conj:"",teto:41845.48,sb:11596,rc:30119,sp:6000,extra:2324,indeniz:3450,pcS:"",pcA:"",scm:"",idadeC:65,filhos:0};
+const RD={outras:"",conj:"",teto:46366.19,sb:11596,rc:30119,sp:6000,extra:2324,indeniz:3450,pcS:"",pcA:"",scm:"",idadeC:65,filhos:0};
 const PD={inss:8475.55,aliqPC:.075,carreg:.065,irPC:.1,aliqExtra:.275,txPC:.03,txPriv:.05,rpTx:.05,cpssIn:988.07,ir65:1903.98,prazoPC:240,prazoPriv:300};
 const PL={inss:"Teto INSS",aliqPC:"Alíq. prev. complementar",carreg:"Taxa de carregamento",irPC:"IR sobre prev. compl.",aliqExtra:"Alíq. IR sobre extra-teto",txPC:"Rentab. real a.a. prev. compl.",txPriv:"Rentab. real a.a. invest. privado",rpTx:"Taxa da renda vitalícia (% a.a.)",cpssIn:"Aposentado: parcela fixa a deduzir da CPSS de inativo (R$)",ir65:"Aposentado: parcela isenta de IR a partir de 65 anos (R$ ao mês)",prazoPC:"Meses de recebimento (prev. compl.)",prazoPriv:"Meses de recebimento (privado)"};
 const CPD_FED=[[1621,.075,0],[2902.84,.09,24.33],[4354.27,.12,111.42],[8475.55,.14,198.51],[14514.30,.145,240.89],[29028.57,.165,531.18],[56605.73,.19,1256.89],[99999999,.22,2955.06]];
@@ -227,12 +227,12 @@ function ufMsg(c){
   e.innerHTML=(u.st==="ok"?"":(u.st==="pend"?"<b>Atenção:</b> tabela não confirmada. ":"<b>Atenção:</b> dado parcialmente confirmado. "))+u.obs;
 }
 const REMK=["teto","sb","rc","sp","extra","indeniz"];
-const REMD={teto:41845.48,sb:11596,rc:30119,sp:6000,extra:2324,indeniz:3450};
+const REMD={teto:46366.19,sb:11596,rc:30119,sp:6000,extra:2324,indeniz:3450};
 const UFREM={};
 Object.keys(UFD).forEach(c=>{UFREM[c]={teto:"",sb:"",rc:"",sp:"",extra:"",indeniz:""}});
 UFREM.RS=Object.assign({},REMD);
 /* Demais entes: só teto, remuneração básica e indenizações (sigla, rem. básica, indenizações, teto) */
-[["SC",28300,16400,41845],["MS",41845,11500,41845],["RO",31425,14400,41845],["PA",46366,5900,46366],["AC",31512,11000,41845],["MT",32971.87,12000,41845],["PE",31600,5700,46366],["RR",46366,0,46366],["PR",25923,10015,41845],["AL",24800,9000,41845],["SP",32990,12736,36301],["AM",41845,500,41845],["PI",37139,2000,41845],["FED",27287,1000,46366],["GO",28563,3600,41845],["DF",29855,2940,41845],["TO",23874,9228,41845],["MA",36068,400,41845],["RN",36792.84,0,41845],["RJ",27430,2882,41845],["CE",28800,2000,41845],["AP",30380,1102,41845],["MG",27000,3591,41845],["BA",19534,4900,41845],["ES",22853,5900,33006],["SE",22541,0,41845],["PB",18388.43,2500,32350]].forEach(([c,sb,ind,t])=>{UFREM[c]={teto:t,sb:sb,rc:"",sp:"",extra:"",indeniz:ind||""}});
+[["SC",28300,16400,46366.19],["MS",46366.19,11500,46366.19],["RO",31425,14400,46366.19],["PA",46366.19,5900,46366.19],["AC",31512,11000,46366.19],["MT",32971.87,12000,46366.19],["PE",31600,5700,46366.19],["RR",46366.19,0,46366.19],["PR",25923,10015,46366.19],["AL",24800,9000,46366.19],["SP",32990,12736,46366.19],["AM",46366.19,500,46366.19],["PI",37139,2000,46366.19],["FED",27287,1000,46366.19],["GO",28563,3600,46366.19],["DF",29855,2940,46366.19],["TO",23874,9228,46366.19],["MA",36068,400,46366.19],["RN",36792.84,0,46366.19],["RJ",27430,2882,46366.19],["CE",28800,2000,46366.19],["AP",30380,1102,46366.19],["MG",27000,3591,46366.19],["BA",19534,4900,46366.19],["ES",22853,5900,46366.19],["SE",22541,0,46366.19],["PB",18388.43,2500,46366.19]].forEach(([c,sb,ind,t])=>{UFREM[c]={teto:t,sb:sb,rc:"",sp:"",extra:"",indeniz:ind||""}});
 const CARG={
 FED:{c:"Auditor-Fiscal da Receita Federal do Brasil (AFRFB)",l:"Lei nº 10.593/2002",h:"40 horas semanais"},
 AC:{c:"Auditor do Tesouro Estadual (a confirmar)",l:"a confirmar",h:"40 horas semanais"},
